@@ -152,8 +152,8 @@ const HeroSection = () => {
             handle="krishnamathur"
             status="Online"
             contactText="Contact Me"
-            avatarUrl="/avatar.png"
-            miniAvatarUrl="/avatar.png"
+            avatarUrl="/avatar.webp"
+            miniAvatarUrl="/avatar.webp"
             showUserInfo
             enableTilt
             enableMobileTilt={false}
