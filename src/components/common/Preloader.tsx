@@ -69,6 +69,7 @@ const Preloader = ({ onDone }: { onDone: () => void }) => {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       // No intro animation — reveal the site immediately and unmount the panel.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setExit(true);
       onDone();
       return;

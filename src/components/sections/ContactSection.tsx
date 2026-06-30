@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { socialLinks } from "../../data/portfolio";
 import SafeExternalLink from "../common/SafeExternalLink";
 import SocialLinks from "../common/SocialLinks";
@@ -33,6 +33,9 @@ const ContactTerminal = () => {
   });
   const [errors, setErrors] = useState<Partial<Record<FieldKey, string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "mailto">("idle");
+  // Spam mitigation: honeypot field (must stay empty) + time-to-submit.
+  const [honeypot, setHoneypot] = useState("");
+  const mountedAt = useRef(Date.now());
 
   const setField = (key: FieldKey, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -72,7 +75,11 @@ const ContactTerminal = () => {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          company: honeypot,
+          elapsedMs: Date.now() - mountedAt.current,
+        }),
       });
       if (res.ok) {
         setStatus("sent");
@@ -101,6 +108,19 @@ const ContactTerminal = () => {
 
       {/* Form body */}
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5 px-5 py-6 md:px-7 md:py-7">
+        {/* Honeypot — hidden from humans, hidden from a11y tree; bots fill it. */}
+        <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+          <label htmlFor="company-website">Company website</label>
+          <input
+            id="company-website"
+            type="text"
+            name="company"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
         <div className="grid gap-5 sm:grid-cols-2">
           {FIELDS.filter((f) => !f.textarea).map((f) => (
             <Field key={f.key} field={f} value={formData[f.key]} error={errors[f.key]} onChange={setField} />

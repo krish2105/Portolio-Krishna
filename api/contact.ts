@@ -17,6 +17,10 @@ interface ContactPayload {
   email?: string;
   subject?: string;
   message?: string;
+  /** Honeypot — must stay empty; bots tend to fill every field. */
+  company?: string;
+  /** Milliseconds the form was open before submit; humans take >1.5s. */
+  elapsedMs?: number;
 }
 
 const json = (data: unknown, status = 200): Response =>
@@ -46,6 +50,11 @@ export default async function handler(req: Request): Promise<Response> {
   } catch {
     return json({ error: "Invalid request body." }, 400);
   }
+
+  // Abuse mitigation: silently accept (200) bot submissions so they don't retry,
+  // but never send. A filled honeypot or a sub-1.5s submit is almost always a bot.
+  if ((body.company ?? "").trim() !== "") return json({ ok: true });
+  if (typeof body.elapsedMs === "number" && body.elapsedMs < 1500) return json({ ok: true });
 
   const name = (body.name ?? "").trim();
   const email = (body.email ?? "").trim();

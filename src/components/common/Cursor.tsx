@@ -18,6 +18,8 @@ const Cursor = () => {
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) {
+      // One-time capability check on mount — intentional initial setState.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHidden(true);
       return;
     }

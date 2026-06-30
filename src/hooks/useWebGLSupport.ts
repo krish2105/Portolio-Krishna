@@ -18,6 +18,7 @@ export const useWebGLSupport = (): boolean => {
     const lowCores = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4;
 
     if (reduced || coarse || small || lowCores) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSupported(false);
       return;
     }

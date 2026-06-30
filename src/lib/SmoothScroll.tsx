@@ -1,3 +1,7 @@
+/* eslint-disable react-refresh/only-export-components, react-hooks/set-state-in-effect --
+   This module is the smooth-scroll provider: it intentionally co-exports the
+   <SmoothScroll> component alongside the useSmoothScroll() hook and scrollTo()
+   helper, and seeds the Lenis instance into state once on mount. */
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import Lenis from "lenis";
