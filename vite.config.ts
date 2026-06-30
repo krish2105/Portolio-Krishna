@@ -31,9 +31,10 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Don't precache the heavy lazy 3D chunk or big media; runtime-cache instead.
+        // Don't precache the heavy lazy 3D / ML chunks or big media; runtime-cache instead.
         globPatterns: ["**/*.{js,css,html,svg,woff2}"],
-        globIgnores: ["**/NeuralGraphR3F*.js"],
+        globIgnores: ["**/NeuralGraphR3F*.js", "**/transformers*.js", "**/ort*.js"],
+        maximumFileSizeToCacheInBytes: 2_500_000,
         navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
           {
