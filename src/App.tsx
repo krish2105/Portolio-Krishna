@@ -9,6 +9,7 @@ import Footer from "./components/layout/Footer";
 import HeroSection from "./components/hero/HeroSection";
 import TechnologyMarquee from "./components/sections/TechnologyMarquee";
 import AboutSection from "./components/sections/AboutSection";
+import StatsBand from "./components/sections/StatsBand";
 import WhatIDoSection from "./components/sections/WhatIDoSection";
 import JourneySection from "./components/sections/JourneySection";
 import CapabilitiesSection from "./components/sections/CapabilitiesSection";
@@ -34,6 +35,7 @@ const App = () => {
             <HeroSection />
             <TechnologyMarquee />
             <AboutSection />
+            <StatsBand />
             <WhatIDoSection />
             <JourneySection />
             <CapabilitiesSection />
