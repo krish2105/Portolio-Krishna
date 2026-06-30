@@ -587,18 +587,18 @@ export const recognition: RecognitionItem[] = [
     id: "rec-01",
     title: "Student Excellence Award",
     year: "2025",
-    context: "Recognised during the completion of the B.Tech Computer Science and Engineering programme with a specialisation in Artificial Intelligence and Machine Learning.",
+    context: "Awarded on graduating from the B.Tech CSE (AI & ML) programme at Manipal University Jaipur — recognising sustained academic performance across four years of AI/ML coursework and projects.",
   },
   {
     id: "rec-02",
     title: "Brilliant Student Award",
     year: "2025",
-    context: "Recognised for strong academic performance in B.Tech Computer Science and Engineering with Artificial Intelligence.",
+    context: "A second merit recognition from Manipal University Jaipur for consistently strong results across the AI & ML specialisation.",
   },
   {
     id: "rec-03",
-    title: "Class Representative",
+    title: "Class Representative — Master of AI in Business",
     year: "2025 — Present",
-    context: "Supported cohort communication, coordination and collaborative academic initiatives during the Master of AI in Business programme.",
+    context: "Elected by the SP Jain (Dubai) cohort to lead communication and coordination between students and faculty — a trust-and-leadership role alongside a demanding AI/business curriculum.",
   },
 ];

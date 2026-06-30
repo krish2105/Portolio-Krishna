@@ -19,6 +19,7 @@ import WhatIDoSection from "./components/sections/WhatIDoSection";
 import JourneySection from "./components/sections/JourneySection";
 import NowSection from "./components/sections/NowSection";
 import CapabilitiesSection from "./components/sections/CapabilitiesSection";
+import GitHubActivity from "./components/sections/GitHubActivity";
 import ProjectsSection from "./components/sections/ProjectsSection";
 import RecognitionSection from "./components/sections/RecognitionSection";
 import ResumeSection from "./components/sections/ResumeSection";
@@ -50,6 +51,7 @@ const App = () => {
             <JourneySection />
             <NowSection />
             <CapabilitiesSection />
+            <GitHubActivity />
             <ProjectsSection />
             <RecognitionSection />
             <ResumeSection />

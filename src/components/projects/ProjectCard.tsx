@@ -25,6 +25,9 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
     if (!rect) return;
     mx.set((e.clientX - rect.left) / rect.width - 0.5);
     my.set((e.clientY - rect.top) / rect.height - 0.5);
+    // Pointer-tracked spotlight (CSS vars — no React rerender).
+    ref.current?.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+    ref.current?.style.setProperty("--my", `${e.clientY - rect.top}px`);
   };
   const reset = () => {
     mx.set(0);
@@ -52,6 +55,15 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
       className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[#0a0a0a] transition-colors duration-300 hover:border-[#00FF94]/30"
       data-cursor="View"
     >
+      {/* Pointer-tracked spotlight */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[2] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(280px circle at var(--mx, 50%) var(--my, 0%), rgba(0,255,148,0.10), transparent 70%)",
+        }}
+      />
       <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
           {hasImage ? (

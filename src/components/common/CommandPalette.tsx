@@ -107,10 +107,10 @@ const CommandPalette = ({ open, onClose }: { open: boolean; onClose: () => void 
   useEffect(() => {
     if (open) {
       // Reset transient palette state each time it opens, then focus the input.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+      /* eslint-disable react-hooks/set-state-in-effect */
       setQuery("");
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActive(0);
+      /* eslint-enable react-hooks/set-state-in-effect */
       const t = setTimeout(() => inputRef.current?.focus(), 40);
       return () => clearTimeout(t);
     }

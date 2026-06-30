@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { profile, socialLinks } from "../../data/portfolio";
 import HeroBackdrop from "./HeroBackdrop";
+import MagneticButton from "../common/MagneticButton";
 import SocialLinks from "../common/SocialLinks";
 import ProfileCard from "../profile/ProfileCard";
 import { useSmoothScroll, scrollTo } from "../../lib/SmoothScroll";
@@ -124,27 +125,31 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1.05 }}
             className="mt-9 flex flex-wrap items-center gap-5"
           >
-            <a
-              href="#projects"
-              data-cursor="View"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo("#projects", lenis);
-              }}
-              className="group inline-flex items-center gap-3 rounded-full bg-[#00FF94] px-7 py-4 font-bold tracking-wide text-[#050505] transition-transform hover:scale-[1.03]"
-            >
-              VIEW PROJECTS
-              <span className="transition-transform group-hover:translate-x-1">→</span>
-            </a>
-            {socialLinks.resume && (
+            <MagneticButton>
               <a
-                href={socialLinks.resume}
-                download="Krishna-Mathur-Resume.pdf"
-                data-cursor="Download"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-6 py-4 font-bold tracking-wide text-[#EDF5FA] transition-colors hover:border-[#00FF94] hover:text-[#00FF94]"
+                href="#projects"
+                data-cursor="View"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTo("#projects", lenis);
+                }}
+                className="group inline-flex items-center gap-3 rounded-full bg-[#00FF94] px-7 py-4 font-bold tracking-wide text-[#050505] transition-shadow hover:shadow-[0_0_30px_rgba(0,255,148,0.45)]"
               >
-                Download Resume
+                VIEW PROJECTS
+                <span className="transition-transform group-hover:translate-x-1">→</span>
               </a>
+            </MagneticButton>
+            {socialLinks.resume && (
+              <MagneticButton>
+                <a
+                  href={socialLinks.resume}
+                  download="Krishna-Mathur-Resume.pdf"
+                  data-cursor="Download"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-6 py-4 font-bold tracking-wide text-[#EDF5FA] transition-colors hover:border-[#00FF94] hover:text-[#00FF94]"
+                >
+                  Download Resume
+                </a>
+              </MagneticButton>
             )}
             <a
               href="#contact"

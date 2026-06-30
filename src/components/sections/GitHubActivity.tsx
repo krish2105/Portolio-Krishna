@@ -1,0 +1,85 @@
+import { FaGithub } from "react-icons/fa6";
+import { Star, GitFork, Users, Code2 } from "lucide-react";
+import { useGitHubStats } from "../../hooks/useGitHubStats";
+import { RevealText, Rise } from "../common/Reveal";
+
+const GH_USERNAME = "krish2105";
+
+const Stat = ({
+  icon: Icon,
+  value,
+  label,
+}: {
+  icon: typeof Star;
+  value: string | number;
+  label: string;
+}) => (
+  <div className="flex flex-col gap-2 bg-[#0a0a0a] p-6 transition-colors hover:bg-[#0e0e0e]">
+    <Icon size={18} className="text-[#00FF94]" aria-hidden />
+    <span className="font-display text-3xl font-black leading-none text-[#EDF5FA] md:text-4xl">{value}</span>
+    <span className="text-xs text-[#7e8c9a]">{label}</span>
+  </div>
+);
+
+const GitHubActivity = () => {
+  const { stats, loading } = useGitHubStats(GH_USERNAME);
+
+  // Hide the whole section if GitHub is unreachable / rate-limited.
+  if (!loading && !stats) return null;
+
+  return (
+    <section
+      id="github"
+      className="relative border-t border-[var(--border)] px-6 py-24 md:px-[8vw] md:py-32"
+    >
+      <div className="mb-12 flex items-center gap-4">
+        <span className="kicker">/ Live</span>
+        <RevealText className="kicker">Open-source activity</RevealText>
+      </div>
+
+      {loading ? (
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] md:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-32 animate-pulse bg-[#0a0a0a]" />
+          ))}
+        </div>
+      ) : (
+        stats && (
+          <Rise>
+            <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] md:grid-cols-4">
+              <Stat icon={GitFork} value={stats.publicRepos} label="Public repositories" />
+              <Stat icon={Star} value={stats.totalStars} label="Total stars" />
+              <Stat icon={Users} value={stats.followers} label="Followers" />
+              <Stat icon={Code2} value={stats.topLanguages[0] ?? "—"} label="Top language" />
+            </div>
+
+            <div className="mt-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+              <div className="flex flex-wrap gap-2">
+                {stats.topLanguages.map((l) => (
+                  <span
+                    key={l}
+                    className="rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[#A0ADBA]"
+                  >
+                    {l}
+                  </span>
+                ))}
+              </div>
+              <a
+                href={stats.profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="Open"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-5 py-2.5 text-sm font-medium text-[#EDF5FA] transition-colors hover:border-[#00FF94] hover:text-[#00FF94]"
+              >
+                <FaGithub size={15} aria-hidden /> View GitHub profile
+              </a>
+            </div>
+            <p className="mt-4 font-mono text-[11px] text-[#687686]">Live from the GitHub API · cached for 6h.</p>
+          </Rise>
+        )
+      )}
+    </section>
+  );
+};
+
+export default GitHubActivity;
