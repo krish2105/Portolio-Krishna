@@ -10,25 +10,24 @@ This is a single-page portfolio that presents Krishna's work across AI, machine 
 
 ## 2. Live Demo
 
-> **TODO:** Deploy the site (see [Deployment](#10-deployment)) and paste the live URL here.
->
-> `https://<your-deployment>.vercel.app`
+**🔗 [portolio-krishna.vercel.app](https://portolio-krishna.vercel.app/)**
 
 ## 3. Preview
 
-> **TODO:** Add a screenshot once deployed. Place it at `public/preview.png` and reference it here:
->
-> `![Portfolio preview](public/preview.png)`
+The hero renders an interactive WebGL "neural constellation"; project cards open rich case-study dialogs with real metrics. *(To add a static preview image, drop one at `public/preview.png` and reference it here.)*
 
 ## 4. Features
 
-- ⚡ **Single-page experience** with smooth, momentum-based scrolling (Lenis) and anchor navigation.
-- 🎨 **Awwwards-style design** — custom cursor, grain texture, animated reveals (Motion), and a WebGL hero (Three.js / `@react-three/fiber`).
-- 🧩 **Data-driven content** — projects, journey, capabilities, recognition and social links all live in `src/data/portfolio.ts`.
-- 📱 **Fully responsive** with a dedicated mobile menu.
-- ♿ **Accessible** — semantic HTML, skip link, keyboard-focusable controls, `aria-label`s, reduced-motion support, and an error boundary.
-- 🔒 **Safe external links** (`rel="noreferrer noopener"`) and validated link helpers.
-- 🚀 **SEO-ready** — meta description, Open Graph and Twitter Card tags, favicon and theme color in `index.html`.
+- 🧠 **Interactive 3D hero** — a pointer-reactive neural-constellation built with Three.js / React Three Fiber, **lazy-loaded** into its own chunk so it never blocks first paint, with a Canvas 2D fallback and full reduced-motion / low-power degradation.
+- ⚡ **Smooth, momentum-based scrolling** (Lenis) with anchor navigation and an active-section nav pill.
+- 📊 **Case-study modals** — every project opens an accessible dialog (focus-trap, ESC, scroll-lock) with Problem · Approach · What I built · Impact · real metrics · screenshot gallery.
+- 🎨 **Cohesive design system** — single neon accent, one signature easing, custom cursor, film-grain texture, masked text reveals (Motion).
+- 🧩 **Data-driven content** — every section reads from `src/data/portfolio.ts`. No copy is hard-coded in components.
+- 📱 **Fully responsive** with a dedicated mobile menu and a desktop horizontal project gallery that falls back to a vertical stack on mobile.
+- ♿ **Accessible** — semantic HTML, skip link, global keyboard focus rings, WCAG-AA text contrast, `aria-label`s, reduced-motion support, error boundary.
+- 📨 **Working contact form** — posts to a Vercel serverless function that sends via **Resend**, with a honeypot + timing spam guard and a `mailto:` fallback.
+- 🚀 **SEO-ready** — meta + Open Graph + Twitter tags, canonical URL, `robots.txt`, `sitemap.xml`, and JSON-LD `Person`/`WebSite` structured data.
+- 🏎️ **Performance-first** — WebP imagery (≈92% smaller than source PNGs), code-split 3D, cache headers, and Vercel Speed Insights.
 - 📄 **One-click resume download** via a Google Drive direct-download link.
 
 ## 5. Tech Stack
@@ -39,39 +38,42 @@ This is a single-page portfolio that presents Krishna's work across AI, machine 
 | Build tool | Vite 8 |
 | Styling | Tailwind CSS v4 (`@tailwindcss/vite`) |
 | Animation | Motion, Lenis (smooth scroll) |
-| 3D / WebGL | Three.js, `@react-three/fiber`, `@react-three/drei`, OGL |
+| 3D / WebGL | Three.js, `@react-three/fiber` (lazy-loaded) |
+| Contact API | Vercel serverless function + [Resend](https://resend.com) |
+| Analytics | `@vercel/speed-insights` (Core Web Vitals) |
 | Icons | lucide-react, react-icons |
-| Linting | ESLint (typescript-eslint, react-hooks, react-refresh) |
+| Tooling | ESLint (typescript-eslint, react-hooks, react-refresh) — passes clean |
 
 ## 6. Folder Structure
 
 ```
 Krishna_Portfolio/
+├── api/
+│   └── contact.ts          # Vercel serverless fn → Resend (honeypot + timing guard)
 ├── public/                 # Static assets served as-is
-│   ├── avatar.png          # Profile image
+│   ├── avatar.webp         # Profile image (optimized)
+│   ├── og-image.png        # Social share card (1200×630)
 │   ├── favicon.svg
-│   ├── icons.svg
-│   └── logos/              # Tech-stack marquee logos
+│   ├── robots.txt · sitemap.xml
+│   ├── logos/              # Tech-stack marquee logos
+│   └── projects/           # Optimized WebP project screenshots
 ├── src/
-│   ├── assets/             # (reserved for bundled assets)
 │   ├── components/
-│   │   ├── common/         # Button, Reveal, Cursor, SafeExternalLink, LogoLoop, ...
-│   │   ├── hero/           # WebGL hero (Prism, NeuralScene, fallbacks)
+│   │   ├── common/         # Reveal, Cursor, Preloader, SafeExternalLink, LogoLoop, ...
+│   │   ├── hero/           # NeuralGraphR3F (lazy WebGL), HeroBackdrop, NameNeurons (2D fallback)
 │   │   ├── layout/         # Navbar, Footer, MobileMenu
 │   │   ├── profile/        # ProfileCard
-│   │   ├── projects/       # ProjectCard
-│   │   └── sections/       # About, WhatIDo, Journey, Capabilities, Projects, Recognition, Resume, Contact
+│   │   ├── projects/       # ProjectCard, ProjectCover, ProjectModal (case study)
+│   │   └── sections/       # Hero, About, Stats, WhatIDo, Journey, Now, Capabilities, Projects, Recognition, Resume, Contact
 │   ├── data/
 │   │   └── portfolio.ts    # ← All editable content lives here
 │   ├── hooks/              # useMediaQuery, useActiveSection, useWebGLSupport
 │   ├── lib/                # SmoothScroll (Lenis wrapper)
 │   ├── types/
-│   │   └── portfolio.ts    # Project, Skill/Capability, Journey, Recognition, SocialLinks types
-│   ├── App.tsx
-│   ├── main.tsx
-│   └── index.css
-├── index.html              # SEO meta, fonts, favicon
-├── vite.config.ts
+│   │   └── portfolio.ts    # Project, Capability, Journey, Recognition, SocialLinks, Now types
+│   ├── App.tsx · main.tsx · index.css
+├── index.html              # SEO meta, OG, canonical, JSON-LD, fonts
+├── vite.config.ts · vercel.json
 ├── package.json
 └── README.md
 ```
@@ -178,13 +180,26 @@ Other touch points:
 - [ ] Paste the live URL into the [Live Demo](#2-live-demo) section.
 - [ ] Verify the projects in `projects` reflect your real, public work and links.
 
-## 13. Contact
+## 13. Performance & Accessibility Notes
+
+**Performance**
+- The Three.js scene is `React.lazy`-loaded into a separate chunk — the main JS bundle (~160 KB gzip) is unaffected, so LCP stays fast. The scene also unmounts when the hero scrolls off-screen.
+- All imagery is resized WebP (≈92% smaller than the source PNGs); static assets get `immutable` cache headers.
+- Continuous hero animation is paused off-screen and skipped entirely under `prefers-reduced-motion`.
+
+**Accessibility**
+- Semantic landmarks, skip link, and a single `<h1>`.
+- Global `:focus-visible` rings; the mobile menu and case-study modal are proper dialogs (focus-trap, ESC, body-scroll-lock).
+- WCAG-AA text contrast; the custom cursor never removes keyboard focus visibility.
+- Reduced-motion users get no smooth-scroll, no preloader animation, and the 2D/static hero fallback.
+
+## 14. Contact
 
 - **Email:** krishnamathur008@gmail.com
 - **GitHub:** https://github.com/krish2105
 - **LinkedIn:** https://www.linkedin.com/in/krishnamathurmay/
 - **Location:** Dubai, UAE · Jaipur, India
 
-## 14. License
+## 15. License
 
 This project is released under the MIT License. Content, branding and personal assets (name, resume, profile image, project descriptions) belong to Krishna Mathur and are not covered by the code license.

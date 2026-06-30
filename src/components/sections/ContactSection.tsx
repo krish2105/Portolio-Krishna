@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { socialLinks } from "../../data/portfolio";
 import SafeExternalLink from "../common/SafeExternalLink";
 import SocialLinks from "../common/SocialLinks";
@@ -35,7 +35,10 @@ const ContactTerminal = () => {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "mailto">("idle");
   // Spam mitigation: honeypot field (must stay empty) + time-to-submit.
   const [honeypot, setHoneypot] = useState("");
-  const mountedAt = useRef(Date.now());
+  const mountedAt = useRef(0);
+  useEffect(() => {
+    mountedAt.current = Date.now();
+  }, []);
 
   const setField = (key: FieldKey, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
