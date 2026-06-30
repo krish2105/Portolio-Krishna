@@ -167,14 +167,14 @@ const Field = ({
   onChange: (key: FieldKey, value: string) => void;
 }) => {
   const base =
-    "w-full rounded-lg border bg-[#0a0e13] px-4 py-3 text-[#EDF5FA] outline-none transition-colors placeholder:text-[#5b6573] focus:border-[#00FF94] focus:ring-1 focus:ring-[#00FF94]/40";
+    "w-full rounded-lg border bg-[var(--panel)] px-4 py-3 text-[var(--text)] outline-none transition-colors placeholder:text-[var(--text-3)] focus:border-[#00FF94] focus:ring-1 focus:ring-[#00FF94]/40";
   const borderClass = error ? "border-[#ff5f56]" : "border-white/10";
 
   return (
     <label className={`flex flex-col gap-2 ${field.textarea ? "" : ""}`}>
       <span className="kicker">
         {field.label}
-        {field.required && <span className="text-[#00FF94]"> *</span>}
+        {field.required && <span className="text-[var(--accent)]"> *</span>}
       </span>
       {field.textarea ? (
         <textarea
@@ -209,7 +209,7 @@ const ContactSection = () => {
         <RevealText className="kicker">Contact</RevealText>
       </div>
 
-      <h2 className="font-display text-[clamp(2.5rem,9vw,9rem)] font-black leading-[0.9] tracking-tighter text-[#EDF5FA]">
+      <h2 className="font-display text-[clamp(2.5rem,9vw,9rem)] font-black leading-[0.9] tracking-tighter text-[var(--text)]">
         <RevealText as="span">LET'S BUILD</RevealText>
         <br />
         <span className="text-outline-accent">
@@ -227,7 +227,7 @@ const ContactSection = () => {
       <Rise delay={0.1} className="mt-10 max-w-2xl">
         <RevealWords
           text="Open to opportunities and collaborations in AI development, machine learning, data analytics, GenAI and intelligent software."
-          className="text-base text-[#A0ADBA] md:text-lg"
+          className="text-base text-[var(--text-2)] md:text-lg"
         />
       </Rise>
 
@@ -235,7 +235,7 @@ const ContactSection = () => {
       <Rise delay={0.15} className="mt-12">
         <SafeExternalLink
           href={socialLinks.email}
-          className="group inline-flex flex-wrap items-baseline gap-x-4 font-display text-2xl font-bold tracking-tight text-[#EDF5FA] transition-colors hover:text-[#00FF94] md:text-5xl"
+          className="group inline-flex flex-wrap items-baseline gap-x-4 font-display text-2xl font-bold tracking-tight text-[var(--text)] transition-colors hover:text-[var(--accent)] md:text-5xl"
         >
           <span data-cursor="Email">{EMAIL}</span>
           <span className="transition-transform group-hover:translate-x-2">→</span>
@@ -248,7 +248,7 @@ const ContactSection = () => {
           <div className="flex flex-col gap-8">
             <div>
               <p className="kicker mb-3">Based in</p>
-              <p className="font-display text-2xl font-bold text-[#EDF5FA]">Dubai, UAE</p>
+              <p className="font-display text-2xl font-bold text-[var(--text)]">Dubai, UAE</p>
             </div>
             <div>
               <p className="kicker mb-3">Find me online</p>

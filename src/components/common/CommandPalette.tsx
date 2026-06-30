@@ -7,12 +7,14 @@ import {
   Search,
   CornerDownLeft,
   Compass,
+  SunMoon,
 } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import type { ComponentType } from "react";
 import { NAV_ITEMS } from "../../data/nav";
 import { socialLinks } from "../../data/portfolio";
 import { useSmoothScroll, scrollTo } from "../../lib/SmoothScroll";
+import { useTheme } from "../../lib/theme";
 import { isValidUrl } from "../../utils/linkValidation";
 
 interface Command {
@@ -27,6 +29,7 @@ const EMAIL = "krishnamathur008@gmail.com";
 
 const CommandPalette = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const { lenis } = useSmoothScroll();
+  const { theme, toggle } = useTheme();
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -95,8 +98,18 @@ const CommandPalette = ({ open, onClose }: { open: boolean; onClose: () => void 
           onClose();
         },
       });
+    actions.push({
+      id: "theme",
+      label: `Switch to ${theme === "dark" ? "light" : "dark"} mode`,
+      hint: "Theme",
+      Icon: SunMoon,
+      run: () => {
+        toggle();
+        onClose();
+      },
+    });
     return [...nav, ...actions];
-  }, [lenis, onClose]);
+  }, [lenis, onClose, theme, toggle]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -134,7 +147,7 @@ const CommandPalette = ({ open, onClose }: { open: boolean; onClose: () => void 
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[130] flex items-start justify-center bg-[#050505]/70 p-4 pt-[12vh] backdrop-blur-md"
+          className="fixed inset-0 z-[130] flex items-start justify-center bg-[var(--bg)]/70 p-4 pt-[12vh] backdrop-blur-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -151,10 +164,10 @@ const CommandPalette = ({ open, onClose }: { open: boolean; onClose: () => void 
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
             onKeyDown={onKeyDown}
-            className="w-full max-w-xl overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#0c0c0f]/95 shadow-[0_40px_120px_-24px_rgba(0,0,0,0.9)] ring-1 ring-[#00FF94]/10"
+            className="w-full max-w-xl overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--panel-2)]/95 shadow-[0_40px_120px_-24px_rgba(0,0,0,0.9)] ring-1 ring-[#00FF94]/10"
           >
             <div className="flex items-center gap-3 border-b border-[var(--border)] px-4">
-              <Search size={18} className="text-[#7e8c9a]" aria-hidden />
+              <Search size={18} className="text-[var(--text-3)]" aria-hidden />
               <input
                 ref={inputRef}
                 value={query}
@@ -164,16 +177,16 @@ const CommandPalette = ({ open, onClose }: { open: boolean; onClose: () => void 
                 }}
                 placeholder="Jump to a section, copy email, open links…"
                 aria-label="Search commands"
-                className="w-full bg-transparent py-4 text-[15px] text-[#EDF5FA] placeholder:text-[#687686] focus:outline-none"
+                className="w-full bg-transparent py-4 text-[15px] text-[var(--text)] placeholder:text-[var(--text-3)] focus:outline-none"
               />
-              <kbd className="hidden rounded border border-[var(--border)] px-1.5 py-0.5 font-mono text-[10px] text-[#7e8c9a] sm:block">
+              <kbd className="hidden rounded border border-[var(--border)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--text-3)] sm:block">
                 ESC
               </kbd>
             </div>
 
             <div ref={listRef} className="max-h-[52vh] overflow-y-auto p-2">
               {filtered.length === 0 && (
-                <p className="px-3 py-6 text-center text-sm text-[#7e8c9a]">No matching commands.</p>
+                <p className="px-3 py-6 text-center text-sm text-[var(--text-3)]">No matching commands.</p>
               )}
               {filtered.map((c, i) => {
                 const isActive = i === active;
@@ -184,13 +197,13 @@ const CommandPalette = ({ open, onClose }: { open: boolean; onClose: () => void 
                     onMouseEnter={() => setActive(i)}
                     onClick={c.run}
                     className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors ${
-                      isActive ? "bg-[#00FF94]/12 text-[#EDF5FA]" : "text-[#A0ADBA] hover:bg-white/[0.04]"
+                      isActive ? "bg-[#00FF94]/12 text-[var(--text)]" : "text-[var(--text-2)] hover:bg-white/[0.04]"
                     }`}
                   >
-                    <Icon size={16} className={isActive ? "text-[#00FF94]" : "text-[#7e8c9a]"} aria-hidden />
+                    <Icon size={16} className={isActive ? "text-[var(--accent)]" : "text-[var(--text-3)]"} aria-hidden />
                     <span className="flex-1 text-sm">{c.label}</span>
-                    {c.hint && <span className="font-mono text-[11px] text-[#687686]">{c.hint}</span>}
-                    {isActive && <CornerDownLeft size={13} className="text-[#00FF94]" aria-hidden />}
+                    {c.hint && <span className="font-mono text-[11px] text-[var(--text-3)]">{c.hint}</span>}
+                    {isActive && <CornerDownLeft size={13} className="text-[var(--accent)]" aria-hidden />}
                   </button>
                 );
               })}

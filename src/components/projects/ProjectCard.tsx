@@ -52,7 +52,7 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
       tabIndex={0}
       aria-label={`Open case study: ${project.title}`}
       style={{ rotateX, rotateY, transformPerspective: 1200 }}
-      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[#0a0a0a] transition-colors duration-300 hover:border-[#00FF94]/30"
+      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--panel)] transition-colors duration-300 hover:border-[#00FF94]/30"
       data-cursor="View"
     >
       {/* Pointer-tracked spotlight */}
@@ -79,17 +79,17 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
             <ProjectCover project={project} />
           )}
         </div>
-        <span className="absolute right-5 top-4 font-display text-5xl font-black text-[#EDF5FA]/10 md:text-7xl">
+        <span className="absolute right-5 top-4 font-display text-5xl font-black text-[var(--text)]/10 md:text-7xl">
           {project.number}
         </span>
-        <span className="absolute left-5 top-5 rounded-full border border-[#00FF94]/40 bg-[#050505]/60 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-[#00FF94] backdrop-blur">
+        <span className="absolute left-5 top-5 rounded-full border border-[#00FF94]/40 bg-[var(--bg)]/60 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-[var(--accent)] backdrop-blur">
           {project.status}
         </span>
       </div>
 
       <div className="flex flex-1 flex-col p-6 md:p-8">
         <p className="kicker mb-3">{project.category}</p>
-        <h3 className="flex items-start gap-2 font-display text-2xl font-bold leading-tight tracking-tight text-[#EDF5FA] transition-colors group-hover:text-[#00FF94] md:text-3xl">
+        <h3 className="flex items-start gap-2 font-display text-2xl font-bold leading-tight tracking-tight text-[var(--text)] transition-colors group-hover:text-[var(--accent)] md:text-3xl">
           {project.title}
           <ArrowUpRight
             size={20}
@@ -97,14 +97,14 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
             className="mt-1 shrink-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           />
         </h3>
-        <p className="mt-4 text-sm leading-relaxed text-[#A0ADBA]">{project.description}</p>
+        <p className="mt-4 text-sm leading-relaxed text-[var(--text-2)]">{project.description}</p>
 
         <div className="mt-auto pt-6">
           <div className="flex flex-wrap gap-2">
             {project.technologies.slice(0, 6).map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-[var(--border)] px-2.5 py-1 text-[11px] text-[#7e8c9a]"
+                className="rounded-full border border-[var(--border)] px-2.5 py-1 text-[11px] text-[var(--text-3)]"
               >
                 {t}
               </span>
@@ -112,14 +112,14 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
           </div>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">
-            <span className="mr-1 inline-flex items-center gap-1 text-[11px] font-medium text-[#00FF94]">
+            <span className="mr-1 inline-flex items-center gap-1 text-[11px] font-medium text-[var(--accent)]">
               Case study →
             </span>
             {project.repositoryUrl && (
               <SafeExternalLink
                 href={project.repositoryUrl}
                 onClick={stop}
-                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[#A0ADBA] transition-colors hover:border-[#00FF94]/50 hover:text-[#00FF94]"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[var(--text-2)] transition-colors hover:border-[#00FF94]/50 hover:text-[var(--accent)]"
                 aria-label={`${project.title} source code on GitHub`}
               >
                 <FaGithub size={13} aria-hidden /> Code
@@ -129,7 +129,7 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
               <SafeExternalLink
                 href={project.liveUrl}
                 onClick={stop}
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#00FF94]/40 bg-[#00FF94]/10 px-3 py-1.5 text-[11px] font-medium text-[#00FF94] transition-colors hover:bg-[#00FF94]/20"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#00FF94]/40 bg-[#00FF94]/10 px-3 py-1.5 text-[11px] font-medium text-[var(--accent)] transition-colors hover:bg-[#00FF94]/20"
                 aria-label={`${project.title} live demo`}
               >
                 <ExternalLink size={13} aria-hidden /> Live Demo
@@ -139,7 +139,7 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
               <SafeExternalLink
                 href={project.caseStudyUrl}
                 onClick={stop}
-                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[#A0ADBA] transition-colors hover:border-[#00FF94]/50 hover:text-[#00FF94]"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[var(--text-2)] transition-colors hover:border-[#00FF94]/50 hover:text-[var(--accent)]"
                 aria-label={`${project.title} notebook or case study`}
               >
                 <NotebookPen size={13} aria-hidden /> Notebook

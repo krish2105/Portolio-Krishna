@@ -23,7 +23,7 @@ const ResumeButton = ({ variant = "solid", className = "", label = "Download Res
   const styles =
     variant === "solid"
       ? "bg-[#00FF94] text-[#050505] hover:shadow-[0_0_24px_rgba(0,255,148,0.55)] hover:-translate-y-0.5"
-      : "bg-transparent border border-[rgba(215,226,234,0.28)] text-[#EDF5FA] hover:border-[#00FF94] hover:text-[#00FF94]";
+      : "bg-transparent border border-[rgba(215,226,234,0.28)] text-[var(--text)] hover:border-[#00FF94] hover:text-[var(--accent)]";
 
   return (
     <a

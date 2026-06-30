@@ -17,7 +17,7 @@ const Tile = ({ className = "", children }: { className?: string; children: Reac
       e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
       e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
     }}
-    className={`group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[#0a0a0a]/80 p-6 backdrop-blur-sm transition-colors duration-300 hover:border-[#00FF94]/30 md:p-7 ${className}`}
+    className={`group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--panel)]/80 p-6 backdrop-blur-sm transition-colors duration-300 hover:border-[#00FF94]/30 md:p-7 ${className}`}
   >
     <div
       aria-hidden
@@ -32,18 +32,18 @@ const Tile = ({ className = "", children }: { className?: string; children: Reac
 
 const Metric = ({ value, suffix, label }: { value: string; suffix?: string; label: string }) => (
   <div className="flex h-full flex-col justify-center">
-    <p className="font-display text-4xl font-black leading-none tracking-tight text-[#EDF5FA] md:text-5xl">
+    <p className="font-display text-4xl font-black leading-none tracking-tight text-[var(--text)] md:text-5xl">
       {value}
-      {suffix && <span className="text-[#00FF94]">{suffix}</span>}
+      {suffix && <span className="text-[var(--accent)]">{suffix}</span>}
     </p>
-    <p className="mt-2 text-xs leading-snug text-[#7e8c9a]">{label}</p>
+    <p className="mt-2 text-xs leading-snug text-[var(--text-3)]">{label}</p>
   </div>
 );
 
 const NowTile = ({ label, value }: { label: string; value: string }) => (
   <div className="flex h-full flex-col">
     <span className="kicker mb-2">{label}</span>
-    <p className="text-[15px] leading-relaxed text-[#A0ADBA] md:text-base">{value}</p>
+    <p className="text-[15px] leading-relaxed text-[var(--text-2)] md:text-base">{value}</p>
   </div>
 );
 
@@ -63,16 +63,16 @@ const BentoSection = () => {
       <Rise>
         <div className="grid auto-rows-[minmax(120px,auto)] grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
           {/* Availability — hero tile */}
-          <Tile className="col-span-2 row-span-2 flex flex-col justify-between bg-gradient-to-br from-[#0a0e0c] to-[#0a0a0a]">
+          <Tile className="col-span-2 row-span-2 flex flex-col justify-between bg-gradient-to-br from-[var(--panel)] to-[var(--panel)]">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-[#00FF94]/25 bg-[#00FF94]/10 px-3 py-1 text-xs font-medium text-[#00FF94]">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#00FF94]/25 bg-[#00FF94]/10 px-3 py-1 text-xs font-medium text-[var(--accent)]">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#00FF94]" />
                 Open to opportunities
               </span>
-              <p className="mt-5 font-display text-2xl font-bold leading-tight tracking-tight text-[#EDF5FA] md:text-3xl">
+              <p className="mt-5 font-display text-2xl font-bold leading-tight tracking-tight text-[var(--text)] md:text-3xl">
                 Building practical AI, data & GenAI systems — and looking for the next one.
               </p>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-[#A0ADBA]">{profile.availability}</p>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--text-2)]">{profile.availability}</p>
             </div>
             <button
               onClick={() => scrollTo("#contact", lenis)}
@@ -93,13 +93,13 @@ const BentoSection = () => {
           {/* Location */}
           <Tile className="col-span-2">
             <div className="flex h-full items-center gap-4">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-[var(--border)] bg-[#111] text-[#00FF94]">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-[var(--border)] bg-[var(--panel-2)] text-[var(--accent)]">
                 <MapPin size={18} aria-hidden />
               </span>
               <div>
                 <p className="kicker mb-1">Based in</p>
-                <p className="font-display text-lg font-bold text-[#EDF5FA]">
-                  {profile.location} <span className="text-[#7e8c9a]">·</span> {profile.secondaryLocation}
+                <p className="font-display text-lg font-bold text-[var(--text)]">
+                  {profile.location} <span className="text-[var(--text-3)]">·</span> {profile.secondaryLocation}
                 </p>
               </div>
             </div>
@@ -113,16 +113,16 @@ const BentoSection = () => {
           {/* Studying */}
           <Tile className="col-span-2 md:col-span-1">
             <div className="flex h-full flex-col">
-              <GraduationCap size={18} className="mb-2 text-[#00FF94]" aria-hidden />
+              <GraduationCap size={18} className="mb-2 text-[var(--accent)]" aria-hidden />
               <span className="kicker mb-1">Studying</span>
-              <p className="text-sm leading-snug text-[#A0ADBA]">Master of AI in Business · SP Jain, Dubai</p>
+              <p className="text-sm leading-snug text-[var(--text-2)]">Master of AI in Business · SP Jain, Dubai</p>
             </div>
           </Tile>
 
           {/* Exploring */}
           <Tile className="col-span-2 md:col-span-1">
             <div className="flex h-full flex-col">
-              <Sparkles size={18} className="mb-2 text-[#00FF94]" aria-hidden />
+              <Sparkles size={18} className="mb-2 text-[var(--accent)]" aria-hidden />
               <NowTile label="Exploring" value={find("exploring")} />
             </div>
           </Tile>

@@ -23,7 +23,7 @@ const RoleRotator = () => {
         initial={{ y: "110%" }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: EASE }}
-        className="text-[#00FF94]"
+        className="text-[var(--accent)]"
       >
         {profile.titles[i]}
       </motion.span>
@@ -43,7 +43,7 @@ const HeroSection = () => {
   const letters2 = "MATHUR".split("");
 
   return (
-    <section ref={ref} id="home" className="relative min-h-[100svh] w-full overflow-hidden bg-[#050505] bg-grid">
+    <section ref={ref} id="home" className="relative min-h-[100svh] w-full overflow-hidden bg-[var(--bg)] bg-grid">
       {/* Single, calm background: the firing-neuron field */}
       <motion.div style={{ scale }} className="absolute inset-0 z-0">
         <div className="absolute inset-0 opacity-75">
@@ -54,8 +54,8 @@ const HeroSection = () => {
         {/* Slow-drifting aurora for living depth */}
         <div aria-hidden className="aurora pointer-events-none absolute left-[2%] top-[12%] h-[55vmin] w-[55vmin] rounded-full" />
         {/* Readability washes so the text always sits on calm contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/55 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/60 via-transparent to-[#050505]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[var(--bg)]/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)]/60 via-transparent to-[var(--bg)]" />
       </motion.div>
 
       {/* Foreground: text (left) + photo card (right) */}
@@ -114,9 +114,9 @@ const HeroSection = () => {
             <p className="font-display text-xl font-bold tracking-tight md:text-2xl">
               <RoleRotator />
             </p>
-            <p className="max-w-lg text-base text-[#A0ADBA] leading-relaxed">
+            <p className="max-w-lg text-base text-[var(--text-2)] leading-relaxed">
               I build practical AI systems — from{" "}
-              <span className="text-[#EDF5FA]">fraud detection</span> and healthcare
+              <span className="text-[var(--text)]">fraud detection</span> and healthcare
               optimisation to analytics dashboards and GenAI workflows — that turn data into decisions.
             </p>
           </motion.div>
@@ -147,7 +147,7 @@ const HeroSection = () => {
                   href={socialLinks.resume}
                   download="Krishna-Mathur-Resume.pdf"
                   data-cursor="Download"
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-6 py-4 font-bold tracking-wide text-[#EDF5FA] transition-colors hover:border-[#00FF94] hover:text-[#00FF94]"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-6 py-4 font-bold tracking-wide text-[var(--text)] transition-colors hover:border-[#00FF94] hover:text-[var(--accent)]"
                 >
                   Download Resume
                 </a>
@@ -160,7 +160,7 @@ const HeroSection = () => {
                 e.preventDefault();
                 scrollTo("#contact", lenis);
               }}
-              className="font-semibold tracking-wide text-[#A0ADBA] underline-offset-4 transition-colors hover:text-[#EDF5FA] hover:underline"
+              className="font-semibold tracking-wide text-[var(--text-2)] underline-offset-4 transition-colors hover:text-[var(--text)] hover:underline"
             >
               Contact me →
             </a>

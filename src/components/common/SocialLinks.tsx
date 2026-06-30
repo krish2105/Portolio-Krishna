@@ -48,7 +48,7 @@ const SocialLinks = ({ size = 20, className = "", iconClassName = "" }: SocialLi
             rel={isMailto ? undefined : "noopener noreferrer"}
             aria-label={label}
             title={label}
-            className={`group relative grid place-items-center w-11 h-11 rounded-md border border-[rgba(215,226,234,0.14)] bg-[#111111] text-[#A0ADBA] transition-all duration-300 hover:text-[#050505] hover:bg-[#00FF94] hover:border-[#00FF94] hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(0,255,148,0.45)] focus-visible-ring ${iconClassName}`}
+            className={`group relative grid place-items-center w-11 h-11 rounded-md border border-[rgba(215,226,234,0.14)] bg-[var(--panel-2)] text-[var(--text-2)] transition-all duration-300 hover:text-[#050505] hover:bg-[#00FF94] hover:border-[#00FF94] hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(0,255,148,0.45)] focus-visible-ring ${iconClassName}`}
           >
             <Icon size={size} />
           </a>

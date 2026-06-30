@@ -5,6 +5,10 @@
   --bg-2: #0a0a0a;
   --surface: #111111;
   --surface-2: #161616;
+  /* Themed surface tokens used across components (dark defaults). */
+  --panel: #0a0a0a;
+  --panel-2: #0c0c0f;
+  --ghost-dim: #0f0f0f;
   --text: #edf5fa;
   --text-2: #a0adba;
   --text-3: #7e8c9a;
@@ -22,6 +26,40 @@
 
   /* Signature easing used across the whole site */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Light theme ("Lab light") ─────────────────────────────────────────
+   A soft, premium light palette. The neon accent darkens to stay AA on
+   white; the accent is still used vivid for fills (with dark ink) in markup. */
+[data-theme="light"] {
+  --bg: #f5f7fa;
+  --bg-2: #eef2f6;
+  --panel: #ffffff;
+  --panel-2: #eef2f6;
+  --ghost-dim: #e7ebef;
+  --text: #0c1218;
+  --text-2: #46535f;
+  --text-3: #5f6c78;
+  --accent: #00935a;
+  --accent-dim: #007a48;
+  --border: rgba(12, 18, 24, 0.12);
+  --border-strong: rgba(12, 18, 24, 0.22);
+}
+
+[data-theme="light"] body {
+  background: var(--bg);
+}
+
+/* Darker name gradient so the hero headline stays readable on light. */
+[data-theme="light"] .name-energy {
+  background-image: linear-gradient(
+    100deg,
+    #00532f 0%,
+    #00935a 25%,
+    #00b368 50%,
+    #00935a 75%,
+    #00532f 100%
+  );
 }
 
 * {

@@ -96,9 +96,9 @@ const Assistant = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1.4, duration: 0.4 }}
-        className="fixed bottom-5 right-5 z-[115] inline-flex items-center gap-2 rounded-full border border-[#00FF94]/40 bg-[#0a0a0a]/90 px-4 py-3 text-sm font-semibold text-[#EDF5FA] shadow-[0_10px_40px_-8px_rgba(0,0,0,0.8)] backdrop-blur transition-colors hover:border-[#00FF94] md:bottom-7 md:right-7"
+        className="fixed bottom-5 right-5 z-[115] inline-flex items-center gap-2 rounded-full border border-[#00FF94]/40 bg-[var(--panel)]/90 px-4 py-3 text-sm font-semibold text-[var(--text)] shadow-[0_10px_40px_-8px_rgba(0,0,0,0.8)] backdrop-blur transition-colors hover:border-[#00FF94] md:bottom-7 md:right-7"
       >
-        <Sparkles size={16} className="text-[#00FF94]" aria-hidden />
+        <Sparkles size={16} className="text-[var(--accent)]" aria-hidden />
         <span className="hidden sm:inline">Ask AI</span>
       </motion.button>
 
@@ -113,23 +113,23 @@ const Assistant = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-20 right-3 z-[116] flex h-[60vh] max-h-[560px] w-[calc(100vw-1.5rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#0c0c0f]/97 shadow-[0_40px_120px_-24px_rgba(0,0,0,0.9)] ring-1 ring-[#00FF94]/10 backdrop-blur-md md:bottom-24 md:right-7"
+            className="fixed bottom-20 right-3 z-[116] flex h-[60vh] max-h-[560px] w-[calc(100vw-1.5rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--panel-2)]/97 shadow-[0_40px_120px_-24px_rgba(0,0,0,0.9)] ring-1 ring-[#00FF94]/10 backdrop-blur-md md:bottom-24 md:right-7"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
               <div className="flex items-center gap-2">
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-[#00FF94]/15 text-[#00FF94]">
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-[#00FF94]/15 text-[var(--accent)]">
                   <Sparkles size={14} aria-hidden />
                 </span>
                 <div className="leading-tight">
-                  <p className="text-sm font-bold text-[#EDF5FA]">Portfolio Assistant</p>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#7e8c9a]">Ask about Krishna</p>
+                  <p className="text-sm font-bold text-[var(--text)]">Portfolio Assistant</p>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-3)]">Ask about Krishna</p>
                 </div>
               </div>
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Close assistant"
-                className="grid h-8 w-8 place-items-center rounded-full text-[#A0ADBA] transition-colors hover:text-[#00FF94]"
+                className="grid h-8 w-8 place-items-center rounded-full text-[var(--text-2)] transition-colors hover:text-[var(--accent)]"
               >
                 <X size={16} aria-hidden />
               </button>
@@ -143,7 +143,7 @@ const Assistant = () => {
                     className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                       m.role === "user"
                         ? "bg-[#00FF94] text-[#050505]"
-                        : "border border-[var(--border)] bg-[#0a0a0a] text-[#cdd6df]"
+                        : "border border-[var(--border)] bg-[var(--panel)] text-[var(--text)]"
                     }`}
                   >
                     <p>{m.text}</p>
@@ -153,7 +153,7 @@ const Assistant = () => {
                           <button
                             key={a.label}
                             onClick={() => runAction(a)}
-                            className="rounded-full border border-[#00FF94]/40 px-3 py-1 text-xs font-medium text-[#00FF94] transition-colors hover:bg-[#00FF94]/10"
+                            className="rounded-full border border-[#00FF94]/40 px-3 py-1 text-xs font-medium text-[var(--accent)] transition-colors hover:bg-[#00FF94]/10"
                           >
                             {a.label}
                           </button>
@@ -166,7 +166,7 @@ const Assistant = () => {
                           <button
                             key={s}
                             onClick={() => send(s)}
-                            className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-left text-xs text-[#A0ADBA] transition-colors hover:border-[#00FF94]/40 hover:text-[#EDF5FA]"
+                            className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-left text-xs text-[var(--text-2)] transition-colors hover:border-[#00FF94]/40 hover:text-[var(--text)]"
                           >
                             {s}
                           </button>
@@ -178,7 +178,7 @@ const Assistant = () => {
               ))}
               {thinking && (
                 <div className="flex justify-start">
-                  <div className="rounded-2xl border border-[var(--border)] bg-[#0a0a0a] px-4 py-3">
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--panel)] px-4 py-3">
                     <span className="flex gap-1">
                       {[0, 1, 2].map((d) => (
                         <motion.span
@@ -200,7 +200,7 @@ const Assistant = () => {
                     <button
                       key={s}
                       onClick={() => send(s)}
-                      className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-left text-xs text-[#A0ADBA] transition-colors hover:border-[#00FF94]/40 hover:text-[#EDF5FA]"
+                      className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-left text-xs text-[var(--text-2)] transition-colors hover:border-[#00FF94]/40 hover:text-[var(--text)]"
                     >
                       {s}
                     </button>
@@ -223,7 +223,7 @@ const Assistant = () => {
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder="Ask a question…"
                 aria-label="Ask the assistant a question"
-                className="w-full rounded-full border border-[var(--border)] bg-[#070707] px-4 py-2.5 text-sm text-[#EDF5FA] placeholder:text-[#687686] focus:border-[#00FF94]/50 focus:outline-none"
+                className="w-full rounded-full border border-[var(--border)] bg-[var(--panel-2)] px-4 py-2.5 text-sm text-[var(--text)] placeholder:text-[var(--text-3)] focus:border-[#00FF94]/50 focus:outline-none"
               />
               <button
                 type="submit"

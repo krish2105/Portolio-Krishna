@@ -100,7 +100,7 @@ const Preloader = ({ onDone }: { onDone: () => void }) => {
     <AnimatePresence>
       {!exit && (
         <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505]"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[var(--bg)]"
           exit={{ y: "-100%" }}
           transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
         >
@@ -120,7 +120,7 @@ const Preloader = ({ onDone }: { onDone: () => void }) => {
                   scrambleDuration={420}
                 />
               )}
-              <span className="text-[#00FF94]">.</span>
+              <span className="text-[var(--accent)]">.</span>
             </motion.h1>
           </div>
 
@@ -140,7 +140,7 @@ const Preloader = ({ onDone }: { onDone: () => void }) => {
             )}
           </motion.div>
 
-          <div className="absolute bottom-10 right-8 md:right-16 font-display font-black text-[18vw] md:text-[12vw] leading-none text-[#0f0f0f] select-none">
+          <div className="absolute bottom-10 right-8 md:right-16 font-display font-black text-[18vw] md:text-[12vw] leading-none text-[var(--ghost-dim)] select-none">
             {count}
           </div>
           <div className="absolute bottom-0 left-0 h-[2px] bg-[#00FF94]" style={{ width: `${count}%` }} />

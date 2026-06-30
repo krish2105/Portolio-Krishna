@@ -73,11 +73,11 @@ const techLogos = [
 
 const TechnologyMarquee = () => {
   return (
-    <section className="relative border-y border-[var(--border)] bg-[#0a0a0a] py-8 md:py-10">
+    <section className="relative border-y border-[var(--border)] bg-[var(--panel)] py-8 md:py-10">
       <Marquee
         items={ROW_A}
         baseVelocity={-2.5}
-        className="font-display text-4xl md:text-7xl font-black tracking-tight text-[#EDF5FA]"
+        className="font-display text-4xl md:text-7xl font-black tracking-tight text-[var(--text)]"
       />
 
       {/* Colorful brand-logo loop */}

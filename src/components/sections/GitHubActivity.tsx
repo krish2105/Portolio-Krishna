@@ -14,10 +14,10 @@ const Stat = ({
   value: string | number;
   label: string;
 }) => (
-  <div className="flex flex-col gap-2 bg-[#0a0a0a] p-6 transition-colors hover:bg-[#0e0e0e]">
-    <Icon size={18} className="text-[#00FF94]" aria-hidden />
-    <span className="font-display text-3xl font-black leading-none text-[#EDF5FA] md:text-4xl">{value}</span>
-    <span className="text-xs text-[#7e8c9a]">{label}</span>
+  <div className="flex flex-col gap-2 bg-[var(--panel)] p-6 transition-colors hover:bg-[var(--panel-2)]">
+    <Icon size={18} className="text-[var(--accent)]" aria-hidden />
+    <span className="font-display text-3xl font-black leading-none text-[var(--text)] md:text-4xl">{value}</span>
+    <span className="text-xs text-[var(--text-3)]">{label}</span>
   </div>
 );
 
@@ -40,7 +40,7 @@ const GitHubActivity = () => {
       {loading ? (
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] md:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-32 animate-pulse bg-[#0a0a0a]" />
+            <div key={i} className="h-32 animate-pulse bg-[var(--panel)]" />
           ))}
         </div>
       ) : (
@@ -58,7 +58,7 @@ const GitHubActivity = () => {
                 {stats.topLanguages.map((l) => (
                   <span
                     key={l}
-                    className="rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[#A0ADBA]"
+                    className="rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[var(--text-2)]"
                   >
                     {l}
                   </span>
@@ -69,12 +69,12 @@ const GitHubActivity = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="Open"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-5 py-2.5 text-sm font-medium text-[#EDF5FA] transition-colors hover:border-[#00FF94] hover:text-[#00FF94]"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-5 py-2.5 text-sm font-medium text-[var(--text)] transition-colors hover:border-[#00FF94] hover:text-[var(--accent)]"
               >
                 <FaGithub size={15} aria-hidden /> View GitHub profile
               </a>
             </div>
-            <p className="mt-4 font-mono text-[11px] text-[#687686]">Live from the GitHub API · cached for 6h.</p>
+            <p className="mt-4 font-mono text-[11px] text-[var(--text-3)]">Live from the GitHub API · cached for 6h.</p>
           </Rise>
         )
       )}

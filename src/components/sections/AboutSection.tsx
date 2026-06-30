@@ -76,14 +76,14 @@ const StatCard = ({
   index: number;
 }) => (
   <Rise delay={index * 0.08}>
-    <div className="group relative overflow-hidden rounded-xl border border-white/[0.06] bg-[#0a0e13]/80 p-6 backdrop-blur-sm transition-all duration-500 hover:border-[#00FF94]/30 hover:bg-[#0a0e13] md:p-7">
+    <div className="group relative overflow-hidden rounded-xl border border-white/[0.06] bg-[var(--panel)]/80 p-6 backdrop-blur-sm transition-all duration-500 hover:border-[#00FF94]/30 hover:bg-[var(--panel)] md:p-7">
       {/* Hover glow */}
       <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#00FF94]/0 blur-2xl transition-all duration-500 group-hover:bg-[#00FF94]/10" />
 
       <div className="relative">
         <span className="mb-3 block text-2xl">{item.icon}</span>
         <dt className="kicker mb-2">{item.label}</dt>
-        <dd className="font-display text-lg font-bold text-[#EDF5FA] transition-colors duration-300 group-hover:text-[#00FF94] md:text-xl">
+        <dd className="font-display text-lg font-bold text-[var(--text)] transition-colors duration-300 group-hover:text-[var(--accent)] md:text-xl">
           {item.value}
         </dd>
       </div>
@@ -136,9 +136,9 @@ const AboutSection = () => {
       <div className="max-w-5xl md:pl-8">
         <Rise>
           <h2 className="font-display text-4xl font-black leading-[1.05] tracking-tight md:text-7xl">
-            <span className="text-[#EDF5FA]">I design and build </span>
+            <span className="text-[var(--text)]">I design and build </span>
             <span className="text-gradient">practical AI systems</span>
-            <span className="text-[#7e8c9a]">
+            <span className="text-[var(--text-3)]">
               {" "}
               — where data meets decisions.
             </span>

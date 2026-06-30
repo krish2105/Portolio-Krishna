@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { useActiveSection } from "../../hooks/useActiveSection";
 import { useSmoothScroll, scrollTo } from "../../lib/SmoothScroll";
 import { NAV_ITEMS as navItems, SECTION_IDS } from "../../data/nav";
+import ThemeToggle from "../common/ThemeToggle";
 import MobileMenu from "./MobileMenu";
 
 const Navbar = () => {
@@ -27,22 +28,22 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
-        scrolled ? "border-b border-[var(--border)] bg-[#050505]/70 py-3 backdrop-blur-xl" : "bg-transparent py-6"
+        scrolled ? "border-b border-[var(--border)] bg-[var(--bg)]/70 py-3 backdrop-blur-xl" : "bg-transparent py-6"
       }`}
     >
       <div className="mx-auto flex max-w-[1600px] items-center justify-between px-6 md:px-[8vw]">
-        <a href="#home" onClick={go("home")} className="font-display text-lg font-black tracking-tighter text-[#EDF5FA] focus-visible-ring" aria-label="Home">
-          KM<span className="text-[#00FF94]">.</span>
+        <a href="#home" onClick={go("home")} className="font-display text-lg font-black tracking-tighter text-[var(--text)] focus-visible-ring" aria-label="Home">
+          KM<span className="text-[var(--accent)]">.</span>
         </a>
 
-        <div className="hidden items-center gap-1 rounded-full border border-[var(--border)] bg-[#0a0a0a]/60 px-2 py-1 backdrop-blur md:flex">
+        <div className="hidden items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--panel)]/60 px-2 py-1 backdrop-blur md:flex">
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
               onClick={go(item.id)}
               className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-                activeId === item.id ? "text-[#050505]" : "text-[#A0ADBA] hover:text-[#EDF5FA]"
+                activeId === item.id ? "text-[#050505]" : "text-[var(--text-2)] hover:text-[var(--text)]"
               }`}
             >
               {activeId === item.id && (
@@ -57,15 +58,21 @@ const Navbar = () => {
           ))}
         </div>
 
-        <a
-          href="#contact"
-          onClick={go("contact")}
-          className="hidden rounded-full border border-[var(--border-strong)] px-5 py-2 text-sm font-bold text-[#EDF5FA] transition-colors hover:border-[#00FF94] hover:text-[#00FF94] md:inline-block"
-        >
-          Let's talk
-        </a>
+        <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
+          <a
+            href="#contact"
+            onClick={go("contact")}
+            className="rounded-full border border-[var(--border-strong)] px-5 py-2 text-sm font-bold text-[var(--text)] transition-colors hover:border-[#00FF94] hover:text-[var(--accent)]"
+          >
+            Let's talk
+          </a>
+        </div>
 
-        <MobileMenu navItems={navItems} activeId={activeId} />
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <MobileMenu navItems={navItems} activeId={activeId} />
+        </div>
       </div>
     </motion.nav>
   );

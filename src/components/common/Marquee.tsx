@@ -59,7 +59,7 @@ const Marquee = ({
         {row.map((item, i) => (
           <span key={i} className="mx-6 inline-flex items-center gap-6">
             {item}
-            <span className="text-[#00FF94]">{separator}</span>
+            <span className="text-[var(--accent)]">{separator}</span>
           </span>
         ))}
       </motion.div>

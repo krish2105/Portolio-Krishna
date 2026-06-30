@@ -40,21 +40,21 @@ const WhatIDoSection = () => {
                 />
                 <span
                   className={`relative font-mono text-sm transition-colors duration-300 ${
-                    isActive ? "text-[#050505]" : "text-[#7e8c9a]"
+                    isActive ? "text-[#050505]" : "text-[var(--text-3)]"
                   }`}
                 >
                   0{i + 1}
                 </span>
                 <h3
                   className={`relative font-display text-3xl font-black tracking-tight transition-all duration-300 md:text-6xl md:group-hover:translate-x-4 ${
-                    isActive ? "text-[#050505]" : "text-[#EDF5FA]"
+                    isActive ? "text-[#050505]" : "text-[var(--text)]"
                   }`}
                 >
                   {s.title}
                 </h3>
                 <p
                   className={`relative max-w-md text-sm leading-relaxed transition-colors duration-300 md:ml-auto md:text-right md:text-base ${
-                    isActive ? "text-[#050505]" : "text-[#A0ADBA]"
+                    isActive ? "text-[#050505]" : "text-[var(--text-2)]"
                   }`}
                 >
                   {s.description}

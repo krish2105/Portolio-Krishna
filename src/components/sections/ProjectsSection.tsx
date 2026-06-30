@@ -16,7 +16,7 @@ const Header = () => (
       <span className="kicker">(05)</span>
       <RevealText className="kicker">Selected Work</RevealText>
     </div>
-    <h2 className="max-w-4xl font-display text-4xl font-black leading-[0.95] tracking-tighter text-[#EDF5FA] md:text-7xl">
+    <h2 className="max-w-4xl font-display text-4xl font-black leading-[0.95] tracking-tighter text-[var(--text)] md:text-7xl">
       <RevealText as="span">PROJECTS</RevealText>
     </h2>
   </div>
@@ -33,8 +33,8 @@ const FilterBar = ({ filter, setFilter }: { filter: Filter; setFilter: (f: Filte
           aria-pressed={active}
           className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-colors ${
             active
-              ? "border-[#00FF94] bg-[#00FF94]/10 text-[#00FF94]"
-              : "border-[var(--border)] text-[#A0ADBA] hover:border-[var(--border-strong)] hover:text-[#EDF5FA]"
+              ? "border-[#00FF94] bg-[#00FF94]/10 text-[var(--accent)]"
+              : "border-[var(--border)] text-[var(--text-2)] hover:border-[var(--border-strong)] hover:text-[var(--text)]"
           }`}
         >
           {f}
@@ -95,7 +95,7 @@ const HorizontalGallery = ({
             <a
               href="#contact"
               data-cursor="Talk"
-              className="font-display text-3xl font-black tracking-tight text-[#7e8c9a] transition-colors hover:text-[#00FF94] md:text-5xl"
+              className="font-display text-3xl font-black tracking-tight text-[var(--text-3)] transition-colors hover:text-[var(--accent)] md:text-5xl"
             >
               Let's
               <br />

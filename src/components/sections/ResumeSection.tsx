@@ -19,19 +19,19 @@ const TimelineCard = ({
   index: number;
 }) => (
   <Rise delay={index * 0.06}>
-    <div className="group relative flex gap-5 rounded-xl border border-white/[0.06] bg-[#0a0e13]/60 p-5 backdrop-blur-sm transition-all duration-500 hover:border-[#00FF94]/25 hover:bg-[#0a0e13] md:p-6">
+    <div className="group relative flex gap-5 rounded-xl border border-white/[0.06] bg-[var(--panel)]/60 p-5 backdrop-blur-sm transition-all duration-500 hover:border-[#00FF94]/25 hover:bg-[var(--panel)] md:p-6">
       {/* Icon */}
-      <div className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/[0.08] bg-[#111] text-[#00FF94] transition-all duration-300 group-hover:border-[#00FF94]/30 group-hover:shadow-[0_0_16px_rgba(0,255,148,0.15)]">
+      <div className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/[0.08] bg-[var(--panel-2)] text-[var(--accent)] transition-all duration-300 group-hover:border-[#00FF94]/30 group-hover:shadow-[0_0_16px_rgba(0,255,148,0.15)]">
         <Icon size={18} />
       </div>
       <div className="min-w-0">
-        <span className="mb-1 block font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[#00FF94]/70">
+        <span className="mb-1 block font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[var(--accent)]/70">
           {date}
         </span>
-        <h4 className="font-display text-base font-bold leading-tight tracking-tight text-[#EDF5FA] md:text-lg">
+        <h4 className="font-display text-base font-bold leading-tight tracking-tight text-[var(--text)] md:text-lg">
           {title}
         </h4>
-        <p className="mt-1 text-sm leading-relaxed text-[#7e8c9a]">{subtitle}</p>
+        <p className="mt-1 text-sm leading-relaxed text-[var(--text-3)]">{subtitle}</p>
       </div>
     </div>
   </Rise>
@@ -43,7 +43,7 @@ const SkillChip = ({ name, isCore }: { name: string; isCore: boolean }) => (
     className={`rounded-full border px-3 py-1 text-xs transition-colors ${
       isCore
         ? "border-[#00FF94]/30 bg-[#00FF94]/8 text-[#6BFFC0]"
-        : "border-white/[0.06] text-[#7e8c9a] hover:border-white/[0.12]"
+        : "border-white/[0.06] text-[var(--text-3)] hover:border-white/[0.12]"
     }`}
   >
     {name}
@@ -56,7 +56,7 @@ const DownloadCard = () => {
 
   return (
     <Rise delay={0.1}>
-      <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a0e13]/60 p-8 backdrop-blur-sm md:p-10">
+      <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[var(--panel)]/60 p-8 backdrop-blur-sm md:p-10">
         {/* Glow background */}
         <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#00FF94]/8 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-12 -left-12 h-32 w-32 rounded-full bg-[#00FF94]/5 blur-2xl" />
@@ -64,15 +64,15 @@ const DownloadCard = () => {
         <div className="relative">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#00FF94]/20 bg-[#00FF94]/8 px-4 py-1.5">
             <span className="h-2 w-2 animate-pulse rounded-full bg-[#00FF94]" />
-            <span className="text-xs font-medium text-[#00FF94]">
+            <span className="text-xs font-medium text-[var(--accent)]">
               Open to opportunities
             </span>
           </div>
 
-          <h3 className="font-display text-2xl font-black tracking-tight text-[#EDF5FA] md:text-3xl">
+          <h3 className="font-display text-2xl font-black tracking-tight text-[var(--text)] md:text-3xl">
             Get my full resume
           </h3>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-[#A0ADBA] md:text-base">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--text-2)] md:text-base">
             Detailed overview of my education, experience, projects, technical
             skills, and certifications — ready for download.
           </p>
@@ -95,7 +95,7 @@ const DownloadCard = () => {
                 </span>
               </a>
             ) : (
-              <span className="inline-flex items-center gap-3 rounded-full border border-dashed border-[#7e8c9a]/40 px-7 py-4 text-sm font-medium text-[#7e8c9a]">
+              <span className="inline-flex items-center gap-3 rounded-full border border-dashed border-[#7e8c9a]/40 px-7 py-4 text-sm font-medium text-[var(--text-3)]">
                 <Download size={18} />
                 Resume link coming soon
               </span>
@@ -106,7 +106,7 @@ const DownloadCard = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="View"
-                className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] px-5 py-4 text-sm font-bold text-[#A0ADBA] transition-all duration-300 hover:border-[#00FF94]/40 hover:text-[#EDF5FA]"
+                className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] px-5 py-4 text-sm font-bold text-[var(--text-2)] transition-all duration-300 hover:border-[#00FF94]/40 hover:text-[var(--text)]"
               >
                 <ExternalLink size={16} />
                 LinkedIn
@@ -188,12 +188,12 @@ const ResumeSection = () => {
       </div>
 
       <Rise>
-        <h2 className="max-w-4xl font-display text-4xl font-black leading-[0.95] tracking-tighter text-[#EDF5FA] md:text-7xl">
+        <h2 className="max-w-4xl font-display text-4xl font-black leading-[0.95] tracking-tighter text-[var(--text)] md:text-7xl">
           <span>RESUME</span>{" "}
           <span className="text-outline-accent">&</span>{" "}
           <span className="text-gradient">EXPERIENCE</span>
         </h2>
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#A0ADBA] md:text-lg">
+        <p className="mt-6 max-w-2xl text-base leading-relaxed text-[var(--text-2)] md:text-lg">
           A snapshot of my academic background, professional experience, and the
           technical skills I bring to every project.
         </p>
@@ -217,9 +217,9 @@ const ResumeSection = () => {
         <div className="flex flex-col gap-10">
           {/* Core skills */}
           <Rise delay={0.05}>
-            <div className="rounded-xl border border-white/[0.06] bg-[#0a0e13]/60 p-6 backdrop-blur-sm md:p-7">
+            <div className="rounded-xl border border-white/[0.06] bg-[var(--panel)]/60 p-6 backdrop-blur-sm md:p-7">
               <div className="mb-4 flex items-center gap-3">
-                <Code2 size={18} className="text-[#00FF94]" />
+                <Code2 size={18} className="text-[var(--accent)]" />
                 <h3 className="kicker">Core competencies</h3>
               </div>
               <div className="flex flex-wrap gap-2">
