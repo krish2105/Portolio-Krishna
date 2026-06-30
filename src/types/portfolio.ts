@@ -5,6 +5,11 @@ export type ProjectStatus =
   | "In Development"
   | "Academic Lab Project";
 
+export interface ProjectMetric {
+  label: string;
+  value: string;
+}
+
 export interface Project {
   id: string;
   number: string;
@@ -20,9 +25,14 @@ export interface Project {
   liveUrl?: string;
   caseStudyUrl?: string;
   note?: string;
-  visualType?: string;
   currentFeatures?: string[];
   plannedFeatures?: string[];
+  /* Case-study fields (shown in the expandable detail view) */
+  problem?: string;
+  approach?: string[];
+  role?: string;
+  impact?: string[];
+  metrics?: ProjectMetric[];
 }
 
 export interface CapabilityGroup {

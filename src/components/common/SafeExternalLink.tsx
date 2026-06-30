@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 import { isValidUrl } from "../../utils/linkValidation";
 
 interface SafeExternalLinkProps {
@@ -6,9 +6,16 @@ interface SafeExternalLinkProps {
   children: ReactNode;
   className?: string;
   "aria-label"?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
-const SafeExternalLink = ({ href, children, className, "aria-label": ariaLabel }: SafeExternalLinkProps) => {
+const SafeExternalLink = ({
+  href,
+  children,
+  className,
+  "aria-label": ariaLabel,
+  onClick,
+}: SafeExternalLinkProps) => {
   if (!isValidUrl(href)) {
     return null;
   }
@@ -22,6 +29,7 @@ const SafeExternalLink = ({ href, children, className, "aria-label": ariaLabel }
       rel={isMailto ? undefined : "noopener noreferrer"}
       className={className}
       aria-label={ariaLabel}
+      onClick={onClick}
     >
       {children}
     </a>

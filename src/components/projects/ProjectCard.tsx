@@ -1,14 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useState } from "react";
-import { ExternalLink, NotebookPen } from "lucide-react";
+import { ExternalLink, NotebookPen, ArrowUpRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import type { Project } from "../../types/portfolio";
 import ProjectCover from "./ProjectCover";
 import SafeExternalLink from "../common/SafeExternalLink";
 
-/** A pointer-tilting project card used in the horizontal gallery. */
-const ProjectCard = ({ project }: { project: Project }) => {
+/**
+ * A pointer-tilting project card. Clicking (or Enter/Space) opens the
+ * case-study modal; the explicit Code / Live / Notebook links open externally
+ * and stop propagation so they don't also trigger the modal.
+ */
+const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => void }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [imgFailed, setImgFailed] = useState(false);
   const hasImage = !!project.images?.[0] && !imgFailed;
@@ -28,16 +31,26 @@ const ProjectCard = ({ project }: { project: Project }) => {
     my.set(0);
   };
 
-  const link = project.liveUrl || project.caseStudyUrl || project.repositoryUrl;
+  const stop = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <motion.article
       ref={ref}
       onPointerMove={handleMove}
       onPointerLeave={reset}
+      onClick={onOpen}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen?.();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open case study: ${project.title}`}
       style={{ rotateX, rotateY, transformPerspective: 1200 }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[#0a0a0a]"
-      data-cursor={link ? "Open" : ""}
+      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[#0a0a0a] transition-colors duration-300 hover:border-[#00FF94]/30"
+      data-cursor="View"
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
@@ -64,14 +77,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
       <div className="flex flex-1 flex-col p-6 md:p-8">
         <p className="kicker mb-3">{project.category}</p>
-        <h3 className="font-display text-2xl font-bold leading-tight tracking-tight text-[#EDF5FA] md:text-3xl">
-          {link ? (
-            <SafeExternalLink href={link} className="transition-colors hover:text-[#00FF94]">
-              {project.title}
-            </SafeExternalLink>
-          ) : (
-            project.title
-          )}
+        <h3 className="flex items-start gap-2 font-display text-2xl font-bold leading-tight tracking-tight text-[#EDF5FA] transition-colors group-hover:text-[#00FF94] md:text-3xl">
+          {project.title}
+          <ArrowUpRight
+            size={20}
+            aria-hidden
+            className="mt-1 shrink-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          />
         </h3>
         <p className="mt-4 text-sm leading-relaxed text-[#A0ADBA]">{project.description}</p>
 
@@ -86,39 +98,42 @@ const ProjectCard = ({ project }: { project: Project }) => {
               </span>
             ))}
           </div>
-          {project.note && <p className="mt-4 text-xs italic text-[#7e8c9a]">{project.note}</p>}
 
-          {(project.repositoryUrl || project.liveUrl || project.caseStudyUrl) && (
-            <div className="mt-5 flex flex-wrap items-center gap-2">
-              {project.repositoryUrl && (
-                <SafeExternalLink
-                  href={project.repositoryUrl}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[#A0ADBA] transition-colors hover:border-[#00FF94]/50 hover:text-[#00FF94]"
-                  aria-label={`${project.title} source code on GitHub`}
-                >
-                  <FaGithub size={13} aria-hidden /> Code
-                </SafeExternalLink>
-              )}
-              {project.liveUrl && (
-                <SafeExternalLink
-                  href={project.liveUrl}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[#00FF94]/40 bg-[#00FF94]/10 px-3 py-1.5 text-[11px] font-medium text-[#00FF94] transition-colors hover:bg-[#00FF94]/20"
-                  aria-label={`${project.title} live demo`}
-                >
-                  <ExternalLink size={13} aria-hidden /> Live Demo
-                </SafeExternalLink>
-              )}
-              {project.caseStudyUrl && (
-                <SafeExternalLink
-                  href={project.caseStudyUrl}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[#A0ADBA] transition-colors hover:border-[#00FF94]/50 hover:text-[#00FF94]"
-                  aria-label={`${project.title} notebook or case study`}
-                >
-                  <NotebookPen size={13} aria-hidden /> Notebook
-                </SafeExternalLink>
-              )}
-            </div>
-          )}
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <span className="mr-1 inline-flex items-center gap-1 text-[11px] font-medium text-[#00FF94]">
+              Case study →
+            </span>
+            {project.repositoryUrl && (
+              <SafeExternalLink
+                href={project.repositoryUrl}
+                onClick={stop}
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[#A0ADBA] transition-colors hover:border-[#00FF94]/50 hover:text-[#00FF94]"
+                aria-label={`${project.title} source code on GitHub`}
+              >
+                <FaGithub size={13} aria-hidden /> Code
+              </SafeExternalLink>
+            )}
+            {project.liveUrl && (
+              <SafeExternalLink
+                href={project.liveUrl}
+                onClick={stop}
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#00FF94]/40 bg-[#00FF94]/10 px-3 py-1.5 text-[11px] font-medium text-[#00FF94] transition-colors hover:bg-[#00FF94]/20"
+                aria-label={`${project.title} live demo`}
+              >
+                <ExternalLink size={13} aria-hidden /> Live Demo
+              </SafeExternalLink>
+            )}
+            {project.caseStudyUrl && (
+              <SafeExternalLink
+                href={project.caseStudyUrl}
+                onClick={stop}
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[#A0ADBA] transition-colors hover:border-[#00FF94]/50 hover:text-[#00FF94]"
+                aria-label={`${project.title} notebook or case study`}
+              >
+                <NotebookPen size={13} aria-hidden /> Notebook
+              </SafeExternalLink>
+            )}
+          </div>
         </div>
       </div>
     </motion.article>

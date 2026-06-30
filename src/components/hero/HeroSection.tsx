@@ -112,8 +112,9 @@ const HeroSection = () => {
               <RoleRotator />
             </p>
             <p className="max-w-lg text-base text-[#A0ADBA] leading-relaxed">
-              I build intelligent systems that turn data into decisions and connect{" "}
-              <span className="text-[#EDF5FA]">artificial intelligence</span> with real business problems.
+              I build practical AI systems — from{" "}
+              <span className="text-[#EDF5FA]">fraud detection</span> and healthcare
+              optimisation to analytics dashboards and GenAI workflows — that turn data into decisions.
             </p>
           </motion.div>
 

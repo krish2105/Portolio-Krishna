@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { projects } from "../../data/portfolio";
+import type { Project } from "../../types/portfolio";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import ProjectCard from "../projects/ProjectCard";
+import ProjectModal from "../projects/ProjectModal";
 import { RevealText } from "../common/Reveal";
 
 const Header = () => (
@@ -18,7 +20,7 @@ const Header = () => (
 );
 
 /** Desktop: vertical scroll is converted into a pinned horizontal track. */
-const HorizontalGallery = () => {
+const HorizontalGallery = ({ onOpen }: { onOpen: (p: Project) => void }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [distance, setDistance] = useState(0);
@@ -45,7 +47,7 @@ const HorizontalGallery = () => {
         <motion.div ref={trackRef} style={{ x }} className="flex gap-8 px-6 md:px-[8vw]">
           {projects.map((p) => (
             <div key={p.id} className="w-[78vw] shrink-0 md:w-[46vw] lg:w-[38vw]">
-              <ProjectCard project={p} />
+              <ProjectCard project={p} onOpen={() => onOpen(p)} />
             </div>
           ))}
           <div className="flex w-[40vw] shrink-0 items-center md:w-[24vw]">
@@ -66,27 +68,29 @@ const HorizontalGallery = () => {
 };
 
 /** Mobile: simple vertical stack — robust and swipe-free. */
-const VerticalStack = () => (
+const VerticalStack = ({ onOpen }: { onOpen: (p: Project) => void }) => (
   <div className="space-y-8 px-6 pt-10">
     {projects.map((p) => (
-      <ProjectCard key={p.id} project={p} />
+      <ProjectCard key={p.id} project={p} onOpen={() => onOpen(p)} />
     ))}
   </div>
 );
 
 const ProjectsSection = () => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const [selected, setSelected] = useState<Project | null>(null);
 
   return (
     <section id="projects" className="relative border-t border-[var(--border)] py-20">
       {isDesktop ? (
-        <HorizontalGallery />
+        <HorizontalGallery onOpen={setSelected} />
       ) : (
         <>
           <Header />
-          <VerticalStack />
+          <VerticalStack onOpen={setSelected} />
         </>
       )}
+      <ProjectModal project={selected} onClose={() => setSelected(null)} />
     </section>
   );
 };

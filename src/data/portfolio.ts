@@ -293,7 +293,25 @@ export const projects: Project[] = [
     ],
     repositoryUrl: "https://github.com/krish2105/FraudShield-AI-Deep-Learning-",
     note: "Master of AI in Business (Term 3) team project — built with Yash Petkar and Atharva Soundankar. Ships with synthetic sample data; designed to retrain on the full PaySim dataset.",
-    visualType: "fraudshield",
+    problem:
+      "Payment fraud hides in the sequence of a customer's transactions, not in any single one. Static rule engines miss evolving patterns and overwhelm analysts with false positives.",
+    approach: [
+      "Framed fraud as a sequence-classification problem over each customer's transaction history.",
+      "Trained an LSTM/RNN to output a calibrated fraud-risk score per sequence.",
+      "Served the model through a FastAPI backend with a premium React dashboard (and a Streamlit alternative UI).",
+      "Translated every score into a recommended business action, with sequence-analyzer and explainability views so analysts can trust each alert.",
+    ],
+    role: "Built the sequence model, the FastAPI scoring service, and the dashboard's fraud-scoring + explainability views.",
+    impact: [
+      "End-to-end pipeline: raw transactions → risk score → recommended action.",
+      "Explainability views designed to make each alert auditable for analysts.",
+      "Architected to retrain on the full 6.3M-row PaySim dataset; honest evaluation notes shipped in the repo.",
+    ],
+    metrics: [
+      { label: "Model", value: "LSTM / RNN" },
+      { label: "Serving", value: "FastAPI + React" },
+      { label: "Team", value: "3 contributors" },
+    ],
   },
   {
     id: "mediflow",
@@ -319,7 +337,26 @@ export const projects: Project[] = [
     caseStudyUrl:
       "https://colab.research.google.com/drive/1LjqDNOLf4z481r_s1NxHATEMKN2ynbZO",
     note: "Master of AI in Business — Reasoning & Decision Making under Uncertainty (DSC 103).",
-    visualType: "mediflow",
+    problem:
+      "Emergency departments must allocate limited beds, staff and equipment to patients of varying urgency under stochastic arrivals — constantly trading fairness against efficiency.",
+    approach: [
+      "Built a simulator of ED patient arrivals and resource constraints.",
+      "Learned an allocation policy with Q-Learning (reinforcement learning).",
+      "Benchmarked the RL policy against a constraint-based optimisation baseline.",
+      "Ran fairness-vs-efficiency sensitivity analysis to expose the trade-off explicitly.",
+    ],
+    role: "Designed the simulator, the Q-Learning policy and the Streamlit executive dashboard.",
+    impact: [
+      "RL policy reaches 67% resource utilisation while holding a 0.859 Jain's fairness index.",
+      "Simulates 500 patients across beds, doctors and nurses at a 49.3-min average wait.",
+      "Fully reproducible via a live Streamlit dashboard and a public Colab notebook.",
+    ],
+    metrics: [
+      { label: "Fairness (Jain's)", value: "0.859" },
+      { label: "Resource utilisation", value: "67%" },
+      { label: "Avg wait time", value: "49.3 min" },
+      { label: "Patients simulated", value: "500" },
+    ],
   },
   {
     id: "lulu-sales",
@@ -341,7 +378,25 @@ export const projects: Project[] = [
     images: ["/projects/lulu/dashboard.webp"],
     repositoryUrl: "https://github.com/mercydeez/lulu-sales-intelligence-dashboard",
     note: "Team project — enterprise retail analytics platform.",
-    visualType: "lulu",
+    problem:
+      "Large retailers generate millions of transactions daily across stores. Leadership lacks real-time visibility, and sensitive financial data needs strict role-based governance.",
+    approach: [
+      "Streamed live sales data into a real-time analytics dashboard.",
+      "Layered AI-powered insights and anomaly detection on top of the stream.",
+      "Enforced role-based access control across regions and stores.",
+      "Containerised the platform with Docker + CI for reproducible deploys.",
+    ],
+    role: "Contributed to the analytics dashboard and backend services.",
+    impact: [
+      "Real-time, multi-store visibility across 10 stores in 3 regions.",
+      "Role-based governance over sensitive financial data.",
+      "Enterprise architecture: Next.js + FastAPI + PostgreSQL + Redis, Docker-orchestrated.",
+    ],
+    metrics: [
+      { label: "Coverage", value: "10 stores · 3 regions" },
+      { label: "Frontend", value: "Next.js + TS" },
+      { label: "Data layer", value: "PostgreSQL + Redis" },
+    ],
   },
   {
     id: "smartloanbot",
@@ -363,7 +418,18 @@ export const projects: Project[] = [
     technologies: ["Python", "Tkinter", "NLTK", "spaCy", "Google Maps API", "Conversational AI"],
     images: [],
     note: "Built during an internship at Intelliza Solutions Pvt. Ltd.; confidential client details are not disclosed.",
-    visualType: "smartloanbot",
+    problem:
+      "First-time borrowers struggle to navigate loan eligibility and options, and human advisors don't scale to every routine question.",
+    approach: [
+      "Built a conversational flow over an NLP intent/FAQ layer (NLTK + spaCy).",
+      "Added a loan-guidance workflow and location-based assistance via the Google Maps API.",
+      "Shipped it as a modular desktop app with a Tkinter interface.",
+    ],
+    role: "Designed and built the chatbot end-to-end during the internship.",
+    impact: [
+      "Demonstrated an automated first-line loan-advisory experience.",
+      "Modular Python design that separates NLP, workflow and UI concerns.",
+    ],
   },
   {
     id: "waselx",
@@ -383,7 +449,18 @@ export const projects: Project[] = [
     ],
     technologies: ["Python", "NetworkX", "Dijkstra’s Algorithm", "Bellman-Ford Algorithm", "Minimum Spanning Tree", "Graph Theory", "Data Structures", "Route Visualisation"],
     images: [],
-    visualType: "waselx",
+    problem:
+      "Last-mile delivery networks need fast, defensible routing decisions across many nodes and constraints.",
+    approach: [
+      "Modelled the delivery network as a weighted graph in NetworkX.",
+      "Applied shortest-path (Dijkstra, Bellman-Ford) and minimum-spanning-tree analysis.",
+      "Visualised and compared candidate routes to support operational decisions.",
+    ],
+    role: "Co-built the graph models and routing/visualisation logic.",
+    impact: [
+      "Turned routing into an explainable, algorithm-backed decision-support tool.",
+      "Compared multiple routing strategies on the same network.",
+    ],
   },
   {
     id: "flower-classifier",
@@ -410,7 +487,17 @@ export const projects: Project[] = [
     ],
     technologies: ["Python", "TensorFlow", "Keras", "CNN", "Streamlit", "FastAPI", "SQLite", "Docker", "Computer Vision"],
     images: [],
-    visualType: "flower",
+    problem:
+      "Image classification is the canonical computer-vision workflow — a clean place to prove an end-to-end CNN pipeline.",
+    approach: [
+      "Preprocessed and augmented the TensorFlow flowers dataset.",
+      "Built training/validation pipelines for a convolutional neural network.",
+      "Scoped a serving path (Streamlit + FastAPI + SQLite history, Docker-ready) as next steps.",
+    ],
+    role: "Built the data pipeline and CNN training/evaluation workflow.",
+    impact: [
+      "A complete, reproducible image-classification workflow from data to trained model.",
+    ],
   },
   {
     id: "talktodata",
@@ -437,7 +524,18 @@ export const projects: Project[] = [
     ],
     technologies: ["Python", "SQL", "Hugging Face Transformers", "NLP", "Streamlit", "Human-in-the-Loop AI", "Database Systems"],
     images: [],
-    visualType: "talktodata",
+    problem:
+      "Natural-language-to-SQL is powerful but risky — a wrong generated query can return confidently incorrect answers or unsafe operations.",
+    approach: [
+      "Generate multiple candidate SQL queries from a business question, schema-aware.",
+      "Keep a human in the loop to compare, review and approve the final query.",
+      "Layer validation and execution safeguards before anything runs.",
+    ],
+    role: "Designing the human-in-the-loop NL2SQL workflow and safety layer.",
+    impact: [
+      "Prioritises trust and safety over fully-autonomous query generation.",
+      "Active development — transformer-backed candidate generation is next.",
+    ],
   },
   {
     id: "electric-production",
@@ -462,7 +560,17 @@ export const projects: Project[] = [
     ],
     technologies: ["Python", "TensorFlow", "Keras", "Pandas", "NumPy", "Scikit-learn", "Matplotlib", "SimpleRNN", "LSTM", "Time-Series Forecasting", "Google Colab"],
     images: [],
-    visualType: "electric",
+    problem:
+      "Sequence-window length quietly drives time-series forecasting quality — but its effect on SimpleRNN vs LSTM is easy to hand-wave.",
+    approach: [
+      "Cleaned, sorted and scaled the electric-production time series.",
+      "Generated sliding-window sequences and trained both SimpleRNN and LSTM models.",
+      "Compared window lengths (e.g. 6 vs 60) and analysed training/validation behaviour.",
+    ],
+    role: "Ran the full experiment: data prep, modelling and comparison.",
+    impact: [
+      "Showed concretely how window length and architecture change forecast accuracy.",
+    ],
   },
 ];
 
