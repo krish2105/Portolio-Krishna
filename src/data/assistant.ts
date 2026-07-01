@@ -5,8 +5,8 @@
  */
 export interface AssistantAction {
   label: string;
-  /** "scroll" → in-page section id (without #); "link" → external/mailto url. */
-  type: "scroll" | "link";
+  /** "scroll" → in-page section id (without #); "link" → external/mailto url; "project" → opens /work/:slug case study. */
+  type: "scroll" | "link" | "project";
   target: string;
 }
 

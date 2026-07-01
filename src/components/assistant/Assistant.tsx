@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Sparkles, X, ArrowUp } from "lucide-react";
+import { Sparkles, X, ArrowUp, Zap, Loader2 } from "lucide-react";
 import {
   ASSISTANT_INTENTS,
   ASSISTANT_SUGGESTIONS,
@@ -10,12 +10,18 @@ import {
 } from "../../data/assistant";
 import { useSmoothScroll, scrollTo } from "../../lib/SmoothScroll";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useKnowledgeSearch } from "../../hooks/useKnowledgeSearch";
 
 interface Msg {
   role: "user" | "bot";
   text: string;
   actions?: AssistantAction[];
+  /** True when this answer came from the semantic (RAG) search path, not the keyword matcher. */
+  semantic?: boolean;
 }
+
+/** A match is only trusted if it clears this cosine-similarity bar; otherwise fall back to keyword matching. */
+const SEMANTIC_THRESHOLD = 0.35;
 
 const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9\s]/g, " ");
 
@@ -34,6 +40,7 @@ const match = (query: string) => {
 const Assistant = () => {
   const { lenis } = useSmoothScroll();
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const { status: smartStatus, progress: smartProgress, enable: enableSmart, search } = useKnowledgeSearch();
   const [open, setOpen] = useState(false);
   const [thinking, setThinking] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([{ role: "bot", text: ASSISTANT_GREETING }]);
@@ -41,6 +48,20 @@ const Assistant = () => {
   const scrollBoxRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [draft, setDraft] = useState("");
+
+  const toggleSmart = async () => {
+    if (smartStatus === "ready" || smartStatus === "loading") return;
+    const ok = await enableSmart();
+    setMessages((m) => [
+      ...m,
+      {
+        role: "bot",
+        text: ok
+          ? "Smart answers are on — a real sentence-embedding model now runs in your browser to semantically match your questions against Krishna's actual project data. Ask in your own words."
+          : "Couldn't load the semantic model (likely a network block). Falling back to the standard matcher — it still covers the same topics.",
+      },
+    ]);
+  };
 
   useEffect(() => {
     // Scroll only the messages container — never the page.
@@ -59,16 +80,35 @@ const Assistant = () => {
     };
   }, [open]);
 
-  const send = (text: string) => {
+  const keywordReply = (q: string): Msg => {
+    const intent = match(q);
+    return intent ? { role: "bot", text: intent.answer, actions: intent.actions } : { role: "bot", text: ASSISTANT_FALLBACK };
+  };
+
+  const send = async (text: string) => {
     const q = text.trim();
     if (!q) return;
     setDraft("");
     setMessages((m) => [...m, { role: "user", text: q }]);
-    const intent = match(q);
-    const reply: Msg = intent
-      ? { role: "bot", text: intent.answer, actions: intent.actions }
-      : { role: "bot", text: ASSISTANT_FALLBACK };
     setThinking(true);
+
+    let reply: Msg;
+    if (smartStatus === "ready") {
+      const results = await search(q, 1);
+      const top = results[0];
+      reply =
+        top && top.score >= SEMANTIC_THRESHOLD
+          ? {
+              role: "bot",
+              text: top.chunk.answer,
+              actions: top.chunk.action ? [top.chunk.action] : undefined,
+              semantic: true,
+            }
+          : keywordReply(q);
+    } else {
+      reply = keywordReply(q);
+    }
+
     const delay = reduced ? 0 : 480;
     setTimeout(() => {
       setThinking(false);
@@ -80,6 +120,10 @@ const Assistant = () => {
     if (a.type === "scroll") {
       setOpen(false);
       setTimeout(() => scrollTo(`#${a.target}`, lenis), 80);
+    } else if (a.type === "project") {
+      setOpen(false);
+      window.history.pushState({}, "", `/work/${a.target}`);
+      window.dispatchEvent(new PopStateEvent("popstate"));
     } else {
       window.open(a.target, "_blank", "noopener,noreferrer");
     }
@@ -126,13 +170,42 @@ const Assistant = () => {
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-3)]">Ask about Krishna</p>
                 </div>
               </div>
-              <button
-                onClick={() => setOpen(false)}
-                aria-label="Close assistant"
-                className="grid h-8 w-8 place-items-center rounded-full text-[var(--text-2)] transition-colors hover:text-[var(--accent)]"
-              >
-                <X size={16} aria-hidden />
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={toggleSmart}
+                  disabled={smartStatus === "loading"}
+                  aria-pressed={smartStatus === "ready"}
+                  aria-label={
+                    smartStatus === "ready"
+                      ? "Smart answers enabled (semantic search)"
+                      : "Enable smart answers (downloads a small AI model to your browser)"
+                  }
+                  title={
+                    smartStatus === "ready"
+                      ? "Smart answers on — semantic search"
+                      : "Enable smart answers (in-browser AI model)"
+                  }
+                  className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium transition-colors disabled:opacity-60 ${
+                    smartStatus === "ready"
+                      ? "border-[#00FF94]/50 bg-[#00FF94]/10 text-[var(--accent)]"
+                      : "border-[var(--border)] text-[var(--text-2)] hover:border-[#00FF94]/40 hover:text-[var(--text)]"
+                  }`}
+                >
+                  {smartStatus === "loading" ? (
+                    <Loader2 size={12} className="animate-spin" aria-hidden />
+                  ) : (
+                    <Zap size={12} aria-hidden />
+                  )}
+                  {smartStatus === "loading" ? `${smartProgress}%` : smartStatus === "ready" ? "Smart: On" : "Smart answers"}
+                </button>
+                <button
+                  onClick={() => setOpen(false)}
+                  aria-label="Close assistant"
+                  className="grid h-8 w-8 place-items-center rounded-full text-[var(--text-2)] transition-colors hover:text-[var(--accent)]"
+                >
+                  <X size={16} aria-hidden />
+                </button>
+              </div>
             </div>
 
             {/* Messages */}
@@ -147,6 +220,11 @@ const Assistant = () => {
                     }`}
                   >
                     <p>{m.text}</p>
+                    {m.semantic && (
+                      <p className="mt-1.5 flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-[var(--accent)]">
+                        <Zap size={10} aria-hidden /> Semantic match — in-browser embedding search
+                      </p>
+                    )}
                     {m.actions && m.actions.length > 0 && (
                       <div className="mt-2.5 flex flex-wrap gap-2">
                         {m.actions.map((a) => (
