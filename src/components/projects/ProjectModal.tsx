@@ -116,7 +116,12 @@ const ProjectModal = ({ project, onClose }: { project: Project | null; onClose: 
 
             {/* Screenshot gallery */}
             {project.images.length > 0 && (
-              <div className="mt-7 flex gap-4 overflow-x-auto pb-2">
+              <div
+                role="region"
+                aria-label={`${project.title} screenshot gallery`}
+                tabIndex={0}
+                className="mt-7 flex gap-4 overflow-x-auto pb-2 focus-visible-ring"
+              >
                 {project.images.map((src, i) => (
                   <img
                     key={src}

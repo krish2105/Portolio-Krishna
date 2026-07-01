@@ -30,3 +30,4 @@ dist-ssr
 # Never commit archives or large generated images
 *.zip
 Gemini_Generated_Image_*.png
+.lighthouseci/

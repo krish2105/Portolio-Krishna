@@ -38,7 +38,6 @@ const App = () => {
         <Cursor />
         <ScrollProgress />
         <CommandPalette open={palette.open} onClose={() => palette.setOpen(false)} />
-        <Assistant />
         <div className="grain relative">
           <SkipLink />
           <Navbar />
@@ -57,6 +56,8 @@ const App = () => {
             <RecognitionSection />
             <ResumeSection />
             <ContactSection />
+            {/* Fixed-position; lives in <main> only so it's reachable via landmark navigation. */}
+            <Assistant />
           </main>
 
           <Footer />

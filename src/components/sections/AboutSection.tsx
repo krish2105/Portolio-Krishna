@@ -43,16 +43,14 @@ const Word = ({
   range: [number, number];
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) => {
-  const opacity = useTransform(progress, range, [0.15, 1]);
-  const color = useTransform(
-    progress,
-    range,
-    ["#3a4552", "#EDF5FA"]
-  );
+  // Dim state uses --text-3 (#7e8c9a), which independently clears WCAG AA
+  // (~5.9:1) against the page background — no opacity blending, so contrast
+  // never dips below that floor at any point in the scroll transition.
+  const color = useTransform(progress, range, ["#7e8c9a", "#EDF5FA"]);
 
   return (
     <motion.span
-      style={{ opacity, color }}
+      style={{ color }}
       className="mr-[0.3em] transition-[filter] duration-300"
     >
       {word}
@@ -82,10 +80,10 @@ const StatCard = ({
 
       <div className="relative">
         <span className="mb-3 block text-2xl">{item.icon}</span>
-        <dt className="kicker mb-2">{item.label}</dt>
-        <dd className="font-display text-lg font-bold text-[var(--text)] transition-colors duration-300 group-hover:text-[var(--accent)] md:text-xl">
+        <p className="kicker mb-2">{item.label}</p>
+        <p className="font-display text-lg font-bold text-[var(--text)] transition-colors duration-300 group-hover:text-[var(--accent)] md:text-xl">
           {item.value}
-        </dd>
+        </p>
       </div>
     </div>
   </Rise>
@@ -162,11 +160,11 @@ const AboutSection = () => {
         <Rise delay={0.05}>
           <p className="kicker mb-8">At a glance</p>
         </Rise>
-        <dl className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
           {meta.map((item, i) => (
             <StatCard key={item.label} item={item} index={i} />
           ))}
-        </dl>
+        </div>
       </div>
 
       {/* ── Decorative bottom accent ── */}

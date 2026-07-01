@@ -34,27 +34,26 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
     my.set(0);
   };
 
-  const stop = (e: React.MouseEvent) => e.stopPropagation();
-
   return (
     <motion.article
       ref={ref}
       onPointerMove={handleMove}
       onPointerLeave={reset}
-      onClick={onOpen}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onOpen?.();
-        }
-      }}
-      role="button"
-      tabIndex={0}
-      aria-label={`Open case study: ${project.title}`}
       style={{ rotateX, rotateY, transformPerspective: 1200 }}
-      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--panel)] transition-colors duration-300 hover:border-[#00FF94]/30"
-      data-cursor="View"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--panel)] transition-colors duration-300 hover:border-[#00FF94]/30"
     >
+      {/* Stretched full-card trigger: a single, unambiguous focusable control that
+          opens the case study. Sits BELOW the real links below (lower z-index) so
+          those remain independently clickable/keyboard-reachable — avoids nesting
+          interactive controls inside another interactive control. */}
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-label={`Open case study: ${project.title}`}
+        data-cursor="View"
+        className="absolute inset-0 z-[1] cursor-pointer focus-visible-ring"
+      />
+
       {/* Pointer-tracked spotlight */}
       <div
         aria-hidden
@@ -111,14 +110,15 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
             ))}
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-2">
+          {/* Elevated above the stretched card button (z-[1]) so these specific
+              links remain independently clickable/keyboard-reachable. */}
+          <div className="relative z-[3] mt-5 flex flex-wrap items-center gap-2">
             <span className="mr-1 inline-flex items-center gap-1 text-[11px] font-medium text-[var(--accent)]">
               Case study →
             </span>
             {project.repositoryUrl && (
               <SafeExternalLink
                 href={project.repositoryUrl}
-                onClick={stop}
                 className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[var(--text-2)] transition-colors hover:border-[#00FF94]/50 hover:text-[var(--accent)]"
                 aria-label={`${project.title} source code on GitHub`}
               >
@@ -128,7 +128,6 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
             {project.liveUrl && (
               <SafeExternalLink
                 href={project.liveUrl}
-                onClick={stop}
                 className="inline-flex items-center gap-1.5 rounded-full border border-[#00FF94]/40 bg-[#00FF94]/10 px-3 py-1.5 text-[11px] font-medium text-[var(--accent)] transition-colors hover:bg-[#00FF94]/20"
                 aria-label={`${project.title} live demo`}
               >
@@ -138,7 +137,6 @@ const ProjectCard = ({ project, onOpen }: { project: Project; onOpen?: () => voi
             {project.caseStudyUrl && (
               <SafeExternalLink
                 href={project.caseStudyUrl}
-                onClick={stop}
                 className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[11px] font-medium text-[var(--text-2)] transition-colors hover:border-[#00FF94]/50 hover:text-[var(--accent)]"
                 aria-label={`${project.title} notebook or case study`}
               >
