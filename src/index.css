@@ -306,6 +306,15 @@ select:focus-visible,
   }
 }
 
+/* ── View Transitions (theme switch) ──────────────────────────────────
+   Give the built-in cross-fade the site's own signature easing/duration
+   instead of the browser default. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: var(--ease);
+}
+
 /* ── Reduced motion ────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -320,5 +329,11 @@ select:focus-visible,
   }
   .grain::after {
     display: none;
+  }
+  /* Defense-in-depth: even if a caller ever skips the JS reduced-motion
+     check, the CSS itself keeps the cross-fade instant. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms !important;
   }
 }
