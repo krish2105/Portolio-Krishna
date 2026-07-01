@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "motion/react";
+import { track } from "@vercel/analytics";
 import { Sparkles, ShieldCheck, Loader2 } from "lucide-react";
 import { useTransformersPipeline } from "../../hooks/useTransformersPipeline";
 import { RevealText, Rise } from "../common/Reveal";
@@ -25,6 +26,7 @@ const LiveDemo = () => {
 
   const analyze = async () => {
     if (!text.trim()) return;
+    track("live_demo_run");
     setBusy(true);
     setResult(null);
     const out = await run(text.trim());

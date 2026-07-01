@@ -1,4 +1,5 @@
 import { Download } from "lucide-react";
+import { track } from "@vercel/analytics";
 import { socialLinks } from "../../data/portfolio";
 
 interface ResumeButtonProps {
@@ -29,6 +30,7 @@ const ResumeButton = ({ variant = "solid", className = "", label = "Download Res
     <a
       href={socialLinks.resume}
       download="Krishna-Mathur-Resume.pdf"
+      onClick={() => track("resume_download")}
       className={`${base} ${styles} ${className}`}
     >
       <Download size={18} />

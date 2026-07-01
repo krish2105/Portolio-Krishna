@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import SkipLink from "./components/common/SkipLink";
 import SmoothScroll from "./lib/SmoothScroll";
@@ -62,8 +63,9 @@ const App = () => {
         </div>
       </SmoothScroll>
 
-      {/* Real-user Core Web Vitals (no-op locally; reports on Vercel) */}
+      {/* Real-user Core Web Vitals + page/event analytics (no-op locally; reports on Vercel) */}
       <SpeedInsights />
+      <Analytics />
 
       {/* `ready` gates nothing visually beyond the preloader, but keeps the
           intro mounted until the sequence finishes. */}

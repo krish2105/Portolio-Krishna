@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
+import { track } from "@vercel/analytics";
 import { profile, socialLinks } from "../../data/portfolio";
 import HeroBackdrop from "./HeroBackdrop";
 import MagneticButton from "../common/MagneticButton";
@@ -133,6 +134,7 @@ const HeroSection = () => {
                 data-cursor="View"
                 onClick={(e) => {
                   e.preventDefault();
+                  track("hero_cta_view_projects");
                   scrollTo("#projects", lenis);
                 }}
                 className="group inline-flex items-center gap-3 rounded-full bg-[#00FF94] px-7 py-4 font-bold tracking-wide text-[#050505] transition-shadow hover:shadow-[0_0_30px_rgba(0,255,148,0.45)]"
@@ -147,6 +149,7 @@ const HeroSection = () => {
                   href={socialLinks.resume}
                   download="Krishna-Mathur-Resume.pdf"
                   data-cursor="Download"
+                  onClick={() => track("resume_download", { source: "hero" })}
                   className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-6 py-4 font-bold tracking-wide text-[var(--text)] transition-colors hover:border-[#00FF94] hover:text-[var(--accent)]"
                 >
                   Download Resume
@@ -158,6 +161,7 @@ const HeroSection = () => {
               data-cursor="Talk"
               onClick={(e) => {
                 e.preventDefault();
+                track("hero_cta_contact");
                 scrollTo("#contact", lenis);
               }}
               className="font-semibold tracking-wide text-[var(--text-2)] underline-offset-4 transition-colors hover:text-[var(--text)] hover:underline"

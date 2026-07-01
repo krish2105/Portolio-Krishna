@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { track } from "@vercel/analytics";
 import { Sparkles, X, ArrowUp, Zap, Loader2 } from "lucide-react";
 import {
   ASSISTANT_INTENTS,
@@ -51,6 +52,7 @@ const Assistant = () => {
 
   const toggleSmart = async () => {
     if (smartStatus === "ready" || smartStatus === "loading") return;
+    track("assistant_smart_answers_enabled");
     const ok = await enableSmart();
     setMessages((m) => [
       ...m,
@@ -133,7 +135,10 @@ const Assistant = () => {
     <>
       {/* Launcher */}
       <motion.button
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          if (!open) track("assistant_opened");
+          setOpen(!open);
+        }}
         data-cursor="Ask"
         aria-label={open ? "Close assistant" : "Open assistant — ask about Krishna"}
         aria-expanded={open}
